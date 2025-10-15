@@ -1,0 +1,152 @@
+// National Scouting America & Disability Organization Resources
+import { Contact, Resource } from '../types';
+
+export const scoutingAmericaContacts: Contact[] = [
+  {
+    name: 'Scouting America National Office',
+    role: 'National Support',
+    phone: '(972) 580-2000',
+    organization: 'Scouting America',
+    website: 'https://www.scouting.org',
+  },
+  {
+    name: 'Health & Safety Team',
+    role: 'Health & Safety',
+    organization: 'Scouting America',
+    website: 'https://www.scouting.org/health-and-safety/',
+  },
+];
+
+export const disabilityOrgContacts: Contact[] = [
+  {
+    name: 'The ARC',
+    role: 'Intellectual & Developmental Disabilities',
+    organization: 'The ARC',
+    website: 'https://thearc.org',
+  },
+  {
+    name: 'Autism Society',
+    role: 'Autism Support',
+    organization: 'Autism Society',
+    website: 'https://autismsociety.org',
+  },
+  {
+    name: 'CHADD',
+    role: 'ADHD Support',
+    organization: 'Children & Adults with ADHD',
+    website: 'https://chadd.org',
+  },
+  {
+    name: 'NAMI',
+    role: 'Mental Health',
+    organization: 'National Alliance on Mental Illness',
+    website: 'https://nami.org',
+  },
+  {
+    name: 'Epilepsy Foundation',
+    role: 'Seizure Support',
+    organization: 'Epilepsy Foundation',
+    website: 'https://www.epilepsy.com',
+  },
+  {
+    name: 'JDRF',
+    role: 'Type 1 Diabetes',
+    organization: 'Juvenile Diabetes Research Foundation',
+    website: 'https://www.jdrf.org',
+  },
+  {
+    name: 'FARE',
+    role: 'Food Allergies',
+    organization: 'Food Allergy Research & Education',
+    website: 'https://www.foodallergy.org',
+  },
+  {
+    name: 'NCLD',
+    role: 'Learning Disabilities',
+    organization: 'National Center for Learning Disabilities',
+    website: 'https://www.ncld.org',
+  },
+];
+
+export const scoutingAmericaResources: Resource[] = [
+  {
+    id: 'inclusion-toolbox',
+    title: 'Inclusion Toolbox',
+    description: 'Comprehensive guide for including Scouts with disabilities',
+    category: 'guide',
+    url: 'https://www.scouting.org/programs/scouts-bsa/advancement-and-awards/resources/',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['inclusion', 'disabilities', 'advancement', 'official'],
+  },
+  {
+    id: 'guide-to-advancement-10',
+    title: 'Guide to Advancement - Section 10',
+    description: 'Official guidance on advancement for Scouts with disabilities',
+    category: 'form',
+    url: 'https://filestore.scouting.org/filestore/pdf/33088.pdf',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['advancement', 'disabilities', 'alternate-requirements', 'official'],
+  },
+  {
+    id: 'medical-forms',
+    title: 'Annual Health & Medical Record (Parts A, B, C)',
+    description: 'Required health forms for all Scouts',
+    category: 'form',
+    url: 'https://filestore.scouting.org/filestore/HealthSafety/pdf/680-001_AB.pdf',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['medical', 'health', 'forms', 'required', 'official'],
+  },
+  {
+    id: 'alternate-eagle-form',
+    title: 'Application for Alternate Eagle Scout Rank Merit Badges',
+    description: 'Form for requesting alternate merit badge requirements',
+    category: 'form',
+    url: 'https://filestore.scouting.org/filestore/pdf/512-730.pdf',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['eagle', 'merit-badges', 'alternate-requirements', 'official'],
+  },
+  {
+    id: 'age-extension',
+    title: 'Request to Register Beyond Age of Eligibility',
+    description: 'Form for age extension requests',
+    category: 'form',
+    url: 'https://filestore.scouting.org/filestore/pdf/512-935.pdf',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['age-extension', 'registration', 'official'],
+  },
+  {
+    id: 'incident-report',
+    title: 'Incident Report Form',
+    description: 'Required form for reporting incidents',
+    category: 'form',
+    url: 'https://filestore.scouting.org/filestore/pdf/680-016_fillable.pdf',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['incident', 'safety', 'reporting', 'official'],
+  },
+  {
+    id: 'edge-method',
+    title: 'EDGE Teaching Method',
+    description: 'Explain, Demonstrate, Guide, Enable - Adapted teaching approach',
+    category: 'guide',
+    url: 'https://filestore.scouting.org/filestore/Training/pdf/13-126.pdf',
+    organization: 'Scouting America',
+    isPrintable: true,
+    tags: ['teaching', 'edge', 'training', 'official'],
+  },
+  {
+    id: 'health-safety',
+    title: 'Health & Safety Resources',
+    description: 'Comprehensive health and safety information',
+    category: 'article',
+    url: 'https://www.scouting.org/health-and-safety/',
+    organization: 'Scouting America',
+    isPrintable: false,
+    tags: ['health', 'safety', 'resources', 'official'],
+  },
+];
