@@ -210,6 +210,13 @@ export default function ProfileScreen() {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, { marginBottom: 12 }]}
+            onPress={() => router.push('/(tabs)/companion-room')}
+          >
+            <Home size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Decorate Room</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { marginBottom: 12 }]}
             onPress={() => router.push('/(tabs)/voice-settings')}
           >
             <Volume2 size={24} color={theme.text} />

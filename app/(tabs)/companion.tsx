@@ -851,21 +851,6 @@ export default function CompanionScreen() {
         </ScrollView>
       </LinearGradient>
 
-      {/* Crisis Support Button */}
-      <TouchableOpacity
-        style={styles.crisisButton}
-        onPress={() => {
-          if (Platform.OS === 'web') {
-            window.open('tel:988', '_self');
-          } else {
-            router.push('/(tabs)/crisis-resources');
-          }
-        }}
-      >
-        <LifeBuoy size={18} color="#FFFFFF" />
-        <Text style={styles.crisisButtonText}>Need immediate support? Call 988 or Text HOME to 741741</Text>
-      </TouchableOpacity>
-
       <View style={styles.inputContainer}>
         {voiceHelper.isRecognitionAvailable() && (
           <TouchableOpacity
