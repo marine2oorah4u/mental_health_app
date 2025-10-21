@@ -22,6 +22,8 @@ import {
   Cloud,
   CloudRain,
   Snowflake,
+  Volume2,
+  VolumeX,
 } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import ColorPicker from '@/components/ColorPicker';
@@ -510,6 +512,40 @@ export default function CompanionEnvironmentScreen() {
               </TouchableOpacity>
             ))}
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Ambient Sound</Text>
+          <TouchableOpacity
+            style={styles.colorRow}
+            onPress={() => {
+              if (environment.ambient_sound === 'none') {
+                updateEnvironment('ambient_sound', 'enabled');
+              } else {
+                updateEnvironment('ambient_sound', 'none');
+              }
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              {environment.ambient_sound === 'none' ? (
+                <VolumeX size={24} color={theme.textSecondary} style={{ marginRight: 12 }} />
+              ) : (
+                <Volume2 size={24} color={theme.primary} style={{ marginRight: 12 }} />
+              )}
+              <View style={{ flex: 1 }}>
+                <Text style={styles.colorLabel}>
+                  {environment.ambient_sound === 'none' ? 'Disabled' : 'Enabled'}
+                </Text>
+                <Text style={[styles.optionDescription, { marginTop: 4 }]}>
+                  Play environment sounds in chat
+                </Text>
+              </View>
+            </View>
+            <Check
+              size={20}
+              color={environment.ambient_sound !== 'none' ? theme.primary : 'transparent'}
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>

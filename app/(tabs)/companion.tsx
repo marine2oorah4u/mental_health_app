@@ -29,6 +29,7 @@ import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import AchievementCelebration from '@/components/AchievementCelebration';
 import AnimatedCompanion from '@/components/AnimatedCompanion';
+import AmbientSoundPlayer from '@/components/AmbientSoundPlayer';
 import { voiceHelper, VoiceSettings, defaultVoiceSettings } from '@/lib/voiceHelper';
 
 interface Message {
@@ -186,6 +187,7 @@ export default function CompanionScreen() {
   const [celebrationAchievement, setCelebrationAchievement] = useState<any>(null);
   const [companionEmotion, setCompanionEmotion] = useState<'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'celebrating'>('idle');
   const [companionAppearance, setCompanionAppearance] = useState<any>(null);
+  const [companionEnvironment, setCompanionEnvironment] = useState<any>(null);
   const [voiceSettings, setVoiceSettings] = useState<VoiceSettings>(defaultVoiceSettings);
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -217,6 +219,7 @@ export default function CompanionScreen() {
     if (!authLoading) {
       showInitialGreeting();
       loadCompanionAppearance();
+      loadCompanionEnvironment();
       loadVoiceSettings();
       if (user?.id) {
         setTimeout(() => checkForNewAchievements(user.id), 1000);
@@ -235,6 +238,20 @@ export default function CompanionScreen() {
 
     if (data) {
       setCompanionAppearance(data);
+    }
+  };
+
+  const loadCompanionEnvironment = async () => {
+    if (!user?.id) return;
+
+    const { data } = await supabase
+      .from('companion_environments')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (data) {
+      setCompanionEnvironment(data);
     }
   };
 
@@ -736,6 +753,16 @@ export default function CompanionScreen() {
         contentContainerStyle={{ paddingBottom: 16 }}
         showsVerticalScrollIndicator={false}
       >
+        {companionEnvironment?.ambient_sound && companionEnvironment.ambient_sound !== 'none' && (
+          <View style={{ marginBottom: 16 }}>
+            <AmbientSoundPlayer
+              environment={companionEnvironment.theme || 'cozy'}
+              initialVolume={companionEnvironment.ambient_volume || 0.3}
+              autoPlay={false}
+            />
+          </View>
+        )}
+
         {messages.map((message, index) => (
           <Animated.View
             key={message.id}
