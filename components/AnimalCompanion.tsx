@@ -114,6 +114,21 @@ export default function AnimalCompanion({
     return animals[animalType];
   };
 
+  // Get emotion indicator emoji
+  const getEmotionIndicator = () => {
+    const indicators: Record<string, string> = {
+      listening: '🎤',
+      speaking: '💬',
+      thinking: '💭',
+      happy: '✨',
+      excited: '🎉',
+      concerned: '💙',
+    };
+    return indicators[emotion] || '';
+  };
+
+  const indicator = getEmotionIndicator();
+
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <Animated.View style={[styles.container, animatedStyle, { width: size, height: size }]}>
@@ -123,6 +138,15 @@ export default function AnimalCompanion({
             {getAnimalEmoji()}
           </Animated.Text>
         </View>
+
+        {/* Emotion indicator floating above */}
+        {indicator && (
+          <View style={[styles.indicator, { top: -size * 0.15, alignSelf: 'center' }]}>
+            <Animated.Text style={{ fontSize: size * 0.25 }}>
+              {indicator}
+            </Animated.Text>
+          </View>
+        )}
 
         {/* Glow effect based on emotion */}
         <View
