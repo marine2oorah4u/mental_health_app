@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home } from 'lucide-react-native';
+import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ProfileScreen() {
@@ -257,6 +257,28 @@ export default function ProfileScreen() {
           >
             <Volume2 size={24} color={theme.text} />
             <Text style={styles.buttonText}>Ambient Sounds</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Community</Text>
+          <TouchableOpacity
+            style={[styles.button, { marginBottom: 12 }]}
+            onPress={() => {
+              alert('Join our Discord community! Link: https://discord.gg/yourlink\n\nComing soon!');
+            }}
+          >
+            <Users size={24} color="#5865F2" />
+            <Text style={styles.buttonText}>Join Discord</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              alert('Join our Facebook Group! Link: https://facebook.com/groups/yourgroup\n\nComing soon!');
+            }}
+          >
+            <Link2 size={24} color="#1877F2" />
+            <Text style={styles.buttonText}>Join Facebook Group</Text>
           </TouchableOpacity>
         </View>
 

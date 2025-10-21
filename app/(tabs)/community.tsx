@@ -638,10 +638,25 @@ export default function CommunityScreen() {
 
       <ScrollView style={styles.content} contentContainerStyle={{ paddingBottom: 100 }}>
         {user && (
-          <TouchableOpacity style={styles.newPostButton} onPress={() => setModalVisible(true)}>
-            <Plus size={24} color="#FFFFFF" />
-            <Text style={styles.newPostButtonText}>Share an Accomplishment</Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity style={styles.newPostButton} onPress={() => setModalVisible(true)}>
+              <Plus size={24} color="#FFFFFF" />
+              <Text style={styles.newPostButtonText}>Share an Accomplishment</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.newPostButton, { backgroundColor: '#10B981', marginTop: 12 }]}
+              onPress={() => {
+                setNotification({
+                  type: 'achievement',
+                  username: 'TestUser',
+                  content: 'Completed 7 day streak! 🎉',
+                });
+              }}
+            >
+              <Sparkles size={24} color="#FFFFFF" />
+              <Text style={styles.newPostButtonText}>Test Notification</Text>
+            </TouchableOpacity>
+          </>
         )}
 
         {achievementFeed.length > 0 && (

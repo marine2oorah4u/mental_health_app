@@ -9,6 +9,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { Sparkles, Heart, TrendingUp } from 'lucide-react-native';
+import { Audio } from 'expo-av';
 
 interface FeedNotificationProps {
   type: 'achievement' | 'post';
@@ -31,6 +32,9 @@ export default function FeedNotification({
   const opacity = useSharedValue(0);
 
   useEffect(() => {
+    // Play notification sound
+    playNotificationSound();
+
     // Slide in from right
     translateX.value = withSpring(0, {
       damping: 20,
@@ -54,6 +58,23 @@ export default function FeedNotification({
 
     return () => clearTimeout(timer);
   }, []);
+
+  const playNotificationSound = async () => {
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        require('@/assets/sounds/notification-sound-269266.mp3'),
+        { volume: 0.5 }
+      );
+      await sound.playAsync();
+      sound.setOnPlaybackStatusUpdate(async (status) => {
+        if (status.isLoaded && status.didJustFinish) {
+          await sound.unloadAsync();
+        }
+      });
+    } catch (error) {
+      console.log('Error playing notification sound:', error);
+    }
+  };
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
