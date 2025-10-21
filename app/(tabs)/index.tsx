@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CheckCircle, Calendar } from 'lucide-react-native';
+import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CheckCircle, Calendar, LifeBuoy } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -17,6 +17,8 @@ export default function HomeScreen() {
     { icon: Music, label: 'Sounds', color: theme.secondary, route: '/(tabs)/wellness' },
     { icon: Heart, label: 'Mood Log', color: theme.accent, route: '/(tabs)/wellness' },
     { icon: BookOpen, label: 'Journal', color: theme.primary, route: '/(tabs)/wellness' },
+    { icon: LifeBuoy, label: 'Resources', color: '#DC2626', route: '/(tabs)/resources' },
+    { icon: Phone, label: 'Crisis Line', color: '#059669', route: '/(tabs)/resources' },
   ];
 
   const styles = StyleSheet.create({
@@ -185,7 +187,10 @@ export default function HomeScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Need Help Now?</Text>
-          <TouchableOpacity style={styles.emergencyButton}>
+          <TouchableOpacity
+            style={styles.emergencyButton}
+            onPress={() => router.push('/(tabs)/resources')}
+          >
             <Phone size={24} color="#FFFFFF" />
             <Text style={styles.emergencyText}>Crisis Resources</Text>
           </TouchableOpacity>
