@@ -28,7 +28,7 @@ import { getAIResponse, trackUserActivity } from '@/lib/companionAI';
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import AchievementCelebration from '@/components/AchievementCelebration';
-import AnimatedCompanion from '@/components/AnimatedCompanion';
+import AnimalCompanion from '@/components/AnimalCompanion';
 import AmbientSoundPlayer from '@/components/AmbientSoundPlayer';
 import { voiceHelper, VoiceSettings, defaultVoiceSettings } from '@/lib/voiceHelper';
 
@@ -189,8 +189,8 @@ export default function CompanionScreen() {
   const [companionAppearance, setCompanionAppearance] = useState<any>(null);
   const [companionEnvironment, setCompanionEnvironment] = useState<any>(null);
 
-  const getEnvironmentGradient = (theme: string) => {
-    const gradients: Record<string, string[]> = {
+  const getEnvironmentGradient = (theme: string): [string, string] => {
+    const gradients: Record<string, [string, string]> = {
       cozy: ['#FFF5E6', '#FFE8D1'],
       garden: ['#E8F5E9', '#C8E6C9'],
       office: ['#E3F2FD', '#BBDEFB'],
@@ -743,20 +743,20 @@ export default function CompanionScreen() {
             <LifeBuoy size={20} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        <View style={{ marginTop: 12 }}>
-          <Text style={{
-            color: 'rgba(255, 255, 255, 0.9)',
-            fontSize: getFontSize(fontSize, 'small'),
-            textAlign: 'center',
-            fontStyle: 'italic'
-          }}>
-            {companionEmotion === 'listening' ? '🎤 Listening...' :
-             companionEmotion === 'speaking' ? '💬 Responding...' :
-             companionEmotion === 'happy' ? '😊 Feeling great!' :
-             companionEmotion === 'concerned' ? '💙 Here for you' :
-             companionEmotion === 'celebrating' ? '🎉 Celebrating!' :
-             '✨ Ready to chat'}
-          </Text>
+        <View style={{ marginTop: 16, alignItems: 'center' }}>
+          <AnimalCompanion
+            animalType={companionAppearance?.species || 'cat'}
+            emotion={
+              companionEmotion === 'celebrating' ? 'excited' :
+              companionEmotion === 'idle' ? 'idle' :
+              companionEmotion
+            }
+            size={140}
+            onPress={() => {
+              setCompanionEmotion('happy');
+              setTimeout(() => setCompanionEmotion('idle'), 2000);
+            }}
+          />
         </View>
       </LinearGradient>
 

@@ -73,6 +73,22 @@ export default function CommunityScreen() {
     loadPosts();
     loadReactions();
     loadAchievementFeed();
+
+    // Auto-refresh feed every 10-60 seconds for testing
+    const getRandomInterval = () => Math.floor(Math.random() * (60000 - 10000 + 1)) + 10000;
+
+    const scheduleNextRefresh = () => {
+      const interval = getRandomInterval();
+      console.log(`Next feed refresh in ${interval / 1000} seconds`);
+      return setTimeout(() => {
+        loadAchievementFeed();
+        loadPosts();
+        scheduleNextRefresh();
+      }, interval);
+    };
+
+    const timer = scheduleNextRefresh();
+    return () => clearTimeout(timer);
   }, []);
 
   const loadAchievementFeed = async () => {

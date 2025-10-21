@@ -12,11 +12,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Palette, Check, Sparkles } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import SimpleColorPicker from '@/components/SimpleColorPicker';
-import AnimatedCompanion from '@/components/AnimatedCompanion';
+import AnimalCompanion from '@/components/AnimalCompanion';
 
 interface CompanionAppearance {
-  companion_type: 'orb' | 'animal' | 'humanoid';
-  species: string;
+  companion_type: 'animal';
+  species: 'cat' | 'dog' | 'bird' | 'bunny';
   primary_color: string;
   secondary_color: string;
   accent_color: string;
@@ -24,24 +24,30 @@ interface CompanionAppearance {
   animation_speed: number;
 }
 
-const companionTypes = [
+const animalSpecies = [
   {
-    value: 'orb' as const,
-    label: 'Orb',
-    description: 'Mystical floating sphere',
-    icon: '🔮',
+    value: 'cat' as const,
+    label: 'Cat',
+    description: 'Curious and playful',
+    icon: '🐱',
   },
   {
-    value: 'animal' as const,
-    label: 'Animal',
-    description: 'Friendly creature',
-    icon: '🐾',
+    value: 'dog' as const,
+    label: 'Dog',
+    description: 'Loyal and energetic',
+    icon: '🐶',
   },
   {
-    value: 'humanoid' as const,
-    label: 'Humanoid',
-    description: 'Human-like avatar',
-    icon: '👤',
+    value: 'bird' as const,
+    label: 'Bird',
+    description: 'Free-spirited and cheerful',
+    icon: '🐦',
+  },
+  {
+    value: 'bunny' as const,
+    label: 'Bunny',
+    description: 'Gentle and calm',
+    icon: '🐰',
   },
 ];
 
@@ -55,8 +61,8 @@ export default function CompanionAppearanceScreen() {
   const { theme, fontSize } = useTheme();
   const { user } = useAuth();
   const [appearance, setAppearance] = useState<CompanionAppearance>({
-    companion_type: 'orb',
-    species: 'default',
+    companion_type: 'animal',
+    species: 'cat',
     primary_color: theme.primary,
     secondary_color: theme.secondary,
     accent_color: theme.accent,
@@ -319,11 +325,9 @@ export default function CompanionAppearanceScreen() {
 
         <View style={styles.previewSection}>
           <Text style={styles.previewTitle}>Preview</Text>
-          <AnimatedCompanion
-            companionType={appearance.companion_type}
-            emotion={testEmotion}
-            primaryColor={appearance.primary_color}
-            secondaryColor={appearance.secondary_color}
+          <AnimalCompanion
+            animalType={appearance.species}
+            emotion={testEmotion === 'celebrating' ? 'excited' : testEmotion}
             size={sizeOptions.find((s) => s.value === appearance.size)?.size || 120}
             onPress={() => testAnimation('happy')}
           />
@@ -338,28 +342,28 @@ export default function CompanionAppearanceScreen() {
               style={styles.testButton}
               onPress={() => testAnimation('celebrating')}
             >
-              <Text style={styles.testButtonText}>Celebrate</Text>
+              <Text style={styles.testButtonText}>Excited</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Companion Type</Text>
-          {companionTypes.map((option) => (
+          <Text style={styles.sectionTitle}>Choose Your Animal</Text>
+          {animalSpecies.map((option) => (
             <TouchableOpacity
               key={option.value}
               style={[
                 styles.optionCard,
-                appearance.companion_type === option.value && styles.optionCardSelected,
+                appearance.species === option.value && styles.optionCardSelected,
               ]}
-              onPress={() => updateAppearance('companion_type', option.value)}
+              onPress={() => updateAppearance('species', option.value)}
             >
               <View style={styles.optionHeader}>
                 <View style={styles.optionLabelRow}>
                   <Text style={styles.optionEmoji}>{option.icon}</Text>
                   <Text style={styles.optionLabel}>{option.label}</Text>
                 </View>
-                {appearance.companion_type === option.value && (
+                {appearance.species === option.value && (
                   <Check size={20} color={theme.primary} />
                 )}
               </View>
