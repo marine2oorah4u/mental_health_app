@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Home, MessageCircle, Heart, Sparkles, User } from 'lucide-react-native';
+import { Home, MessageCircle, Users, User } from 'lucide-react-native';
 
 export default function TabLayout() {
   const { theme } = useTheme();
@@ -15,13 +15,16 @@ export default function TabLayout() {
           backgroundColor: theme.surface,
           borderTopColor: theme.border,
           borderTopWidth: 1,
-          height: 85,
-          paddingBottom: 20,
-          paddingTop: 10,
+          height: 70,
+          paddingBottom: 8,
+          paddingTop: 8,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 12,
           fontWeight: '600',
+          marginTop: 4,
+        },
+        tabBarIconStyle: {
           marginTop: 4,
         },
       }}
@@ -45,20 +48,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="wellness"
-        options={{
-          title: 'Wellness',
-          tabBarIcon: ({ size, color }) => (
-            <Heart size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="community"
         options={{
           title: 'Community',
           tabBarIcon: ({ size, color }) => (
-            <Sparkles size={size} color={color} />
+            <Users size={size} color={color} />
           ),
         }}
       />
@@ -69,6 +63,12 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color }) => (
             <User size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="wellness"
+        options={{
+          href: null,
         }}
       />
       <Tabs.Screen

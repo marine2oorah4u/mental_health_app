@@ -188,6 +188,18 @@ export default function CompanionScreen() {
   const [companionEmotion, setCompanionEmotion] = useState<'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'celebrating'>('idle');
   const [companionAppearance, setCompanionAppearance] = useState<any>(null);
   const [companionEnvironment, setCompanionEnvironment] = useState<any>(null);
+
+  const getEnvironmentGradient = (theme: string) => {
+    const gradients: Record<string, string[]> = {
+      cozy: ['#FFF5E6', '#FFE8D1'],
+      garden: ['#E8F5E9', '#C8E6C9'],
+      office: ['#E3F2FD', '#BBDEFB'],
+      beach: ['#E1F5FE', '#B3E5FC'],
+      mountain: ['#F3E5F5', '#E1BEE7'],
+      space: ['#1A1A2E', '#16213E'],
+    };
+    return gradients[theme] || gradients.cozy;
+  };
   const [voiceSettings, setVoiceSettings] = useState<VoiceSettings>(defaultVoiceSettings);
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -517,7 +529,7 @@ export default function CompanionScreen() {
     headerGradient: {
       paddingTop: 60,
       paddingHorizontal: 20,
-      paddingBottom: 32,
+      paddingBottom: 20,
     },
     headerTitle: {
       fontSize: getFontSize(fontSize, 'title'),
@@ -533,6 +545,7 @@ export default function CompanionScreen() {
     messagesContainer: {
       flex: 1,
       padding: 16,
+      backgroundColor: 'transparent',
     },
     messageWrapper: {
       marginBottom: 16,
@@ -730,37 +743,35 @@ export default function CompanionScreen() {
             <LifeBuoy size={20} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 8 }}>
-          <AnimatedCompanion
-            companionType={companionAppearance?.companion_type || 'orb'}
-            emotion={companionEmotion}
-            primaryColor={companionAppearance?.primary_color}
-            secondaryColor={companionAppearance?.secondary_color}
-            size={companionAppearance?.size === 'small' ? 80 : companionAppearance?.size === 'large' ? 140 : 100}
-            onPress={() => {
-              if (messages.length > 0) {
-                setCompanionEmotion('happy');
-                setTimeout(() => setCompanionEmotion('idle'), 2000);
-              }
-            }}
-          />
+        <View style={{ marginTop: 12 }}>
           <Text style={{
-            color: 'rgba(255, 255, 255, 0.8)',
+            color: 'rgba(255, 255, 255, 0.9)',
             fontSize: getFontSize(fontSize, 'small'),
-            marginTop: 8,
+            textAlign: 'center',
             fontStyle: 'italic'
           }}>
-            Tap me for a smile!
+            {companionEmotion === 'listening' ? '🎤 Listening...' :
+             companionEmotion === 'speaking' ? '💬 Responding...' :
+             companionEmotion === 'happy' ? '😊 Feeling great!' :
+             companionEmotion === 'concerned' ? '💙 Here for you' :
+             companionEmotion === 'celebrating' ? '🎉 Celebrating!' :
+             '✨ Ready to chat'}
           </Text>
         </View>
       </LinearGradient>
 
-      <ScrollView
-        ref={scrollViewRef}
-        style={styles.messagesContainer}
-        contentContainerStyle={{ paddingBottom: 16 }}
-        showsVerticalScrollIndicator={false}
+      <LinearGradient
+        colors={getEnvironmentGradient(companionEnvironment?.theme || 'cozy')}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={{ flex: 1 }}
       >
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.messagesContainer}
+          contentContainerStyle={{ paddingBottom: 16 }}
+          showsVerticalScrollIndicator={false}
+        >
         {companionEnvironment?.ambient_sound && companionEnvironment.ambient_sound !== 'none' && (
           <View style={{ marginBottom: 16 }}>
             <AmbientSoundPlayer
@@ -820,7 +831,8 @@ export default function CompanionScreen() {
             </View>
           </Animated.View>
         )}
-      </ScrollView>
+        </ScrollView>
+      </LinearGradient>
 
       <View style={styles.inputContainer}>
         {voiceHelper.isRecognitionAvailable() && (
