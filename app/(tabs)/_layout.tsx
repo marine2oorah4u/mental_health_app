@@ -119,6 +119,12 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="companion-room"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

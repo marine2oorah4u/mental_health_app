@@ -13,6 +13,7 @@ import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
+import FeedNotification from '@/components/FeedNotification';
 import {
   Plus,
   Heart,
@@ -69,6 +70,13 @@ export default function CommunityScreen() {
   const [loading, setLoading] = useState(false);
   const [showAchievements, setShowAchievements] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [notification, setNotification] = useState<{
+    type: 'achievement' | 'post';
+    username: string;
+    content: string;
+  } | null>(null);
+  const lastAchievementIdRef = useRef<string | null>(null);
+  const lastPostIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     loadPosts();
@@ -116,7 +124,7 @@ export default function CommunityScreen() {
       .order('created_at', { ascending: false })
       .limit(20);
 
-    if (!error && data) {
+    if (!error && data && data.length > 0) {
       const formattedFeed = data.map((item: any) => ({
         id: item.id,
         display_name: item.display_name,
@@ -125,6 +133,19 @@ export default function CommunityScreen() {
         achievement_points: item.achievements?.points || 0,
         earned_at: item.earned_at,
       }));
+
+      // Check for new achievement
+      const latestId = formattedFeed[0].id;
+      if (lastAchievementIdRef.current && lastAchievementIdRef.current !== latestId) {
+        const newAchievement = formattedFeed[0];
+        setNotification({
+          type: 'achievement',
+          username: newAchievement.display_name,
+          content: `unlocked "${newAchievement.achievement_name}"! 🏆`,
+        });
+      }
+      lastAchievementIdRef.current = latestId;
+
       setAchievementFeed(formattedFeed);
     }
   };
@@ -137,7 +158,19 @@ export default function CommunityScreen() {
       .order('created_at', { ascending: false })
       .limit(50);
 
-    if (!error && data) {
+    if (!error && data && data.length > 0) {
+      // Check for new post
+      const latestId = data[0].id;
+      if (lastPostIdRef.current && lastPostIdRef.current !== latestId) {
+        const newPost = data[0];
+        setNotification({
+          type: 'post',
+          username: newPost.display_name || 'Someone',
+          content: newPost.content.substring(0, 60) + (newPost.content.length > 60 ? '...' : ''),
+        });
+      }
+      lastPostIdRef.current = latestId;
+
       setPosts(data);
     }
   };
@@ -565,6 +598,16 @@ export default function CommunityScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Feed Notification */}
+      {notification && (
+        <FeedNotification
+          type={notification.type}
+          username={notification.username}
+          content={notification.content}
+          onDismiss={() => setNotification(null)}
+        />
+      )}
+
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}

@@ -655,6 +655,23 @@ export default function CompanionScreen() {
       alignItems: 'center',
       marginRight: 8,
     },
+    crisisButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#DC2626',
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      marginHorizontal: 16,
+      marginBottom: 8,
+      borderRadius: 12,
+      gap: 8,
+    },
+    crisisButtonText: {
+      color: '#FFFFFF',
+      fontSize: getFontSize(fontSize, 'small'),
+      fontWeight: '600',
+      flex: 1,
+    },
     companionIcon: {
       marginRight: 8,
     },
@@ -833,6 +850,21 @@ export default function CompanionScreen() {
         )}
         </ScrollView>
       </LinearGradient>
+
+      {/* Crisis Support Button */}
+      <TouchableOpacity
+        style={styles.crisisButton}
+        onPress={() => {
+          if (Platform.OS === 'web') {
+            window.open('tel:988', '_self');
+          } else {
+            router.push('/(tabs)/crisis-resources');
+          }
+        }}
+      >
+        <LifeBuoy size={18} color="#FFFFFF" />
+        <Text style={styles.crisisButtonText}>Need immediate support? Call 988 or Text HOME to 741741</Text>
+      </TouchableOpacity>
 
       <View style={styles.inputContainer}>
         {voiceHelper.isRecognitionAvailable() && (
