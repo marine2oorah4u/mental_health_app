@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings } from 'lucide-react-native';
+import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ProfileScreen() {
@@ -207,6 +207,13 @@ export default function ProfileScreen() {
           >
             <Settings size={24} color={theme.text} />
             <Text style={styles.buttonText}>Customize Environment</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { marginBottom: 12 }]}
+            onPress={() => router.push('/(tabs)/voice-settings')}
+          >
+            <Volume2 size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Voice Settings</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}

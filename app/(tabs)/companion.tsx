@@ -23,12 +23,13 @@ import Animated, {
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Send, Sparkles, Loader, LifeBuoy } from 'lucide-react-native';
+import { Send, Sparkles, Loader, LifeBuoy, Mic, Volume2, VolumeX } from 'lucide-react-native';
 import { getAIResponse, trackUserActivity } from '@/lib/companionAI';
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import AchievementCelebration from '@/components/AchievementCelebration';
 import AnimatedCompanion from '@/components/AnimatedCompanion';
+import { voiceHelper, VoiceSettings, defaultVoiceSettings } from '@/lib/voiceHelper';
 
 interface Message {
   id: string;
@@ -185,6 +186,9 @@ export default function CompanionScreen() {
   const [celebrationAchievement, setCelebrationAchievement] = useState<any>(null);
   const [companionEmotion, setCompanionEmotion] = useState<'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'celebrating'>('idle');
   const [companionAppearance, setCompanionAppearance] = useState<any>(null);
+  const [voiceSettings, setVoiceSettings] = useState<VoiceSettings>(defaultVoiceSettings);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const typingOpacity = useSharedValue(0.6);
 
   const scrollViewRef = useRef<ScrollView>(null);
@@ -213,6 +217,7 @@ export default function CompanionScreen() {
     if (!authLoading) {
       showInitialGreeting();
       loadCompanionAppearance();
+      loadVoiceSettings();
       if (user?.id) {
         setTimeout(() => checkForNewAchievements(user.id), 1000);
       }
@@ -230,6 +235,63 @@ export default function CompanionScreen() {
 
     if (data) {
       setCompanionAppearance(data);
+    }
+  };
+
+  const loadVoiceSettings = async () => {
+    if (!user?.id) return;
+
+    const { data } = await supabase
+      .from('user_preferences')
+      .select('voice_settings')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (data?.voice_settings) {
+      setVoiceSettings(data.voice_settings);
+    }
+  };
+
+  const handleVoiceInput = async () => {
+    if (!voiceHelper.isRecognitionAvailable() || isRecording) return;
+
+    try {
+      setIsRecording(true);
+      setCompanionEmotion('listening');
+
+      const transcript = await voiceHelper.listen();
+
+      setInputText(transcript);
+      setIsRecording(false);
+      setCompanionEmotion('idle');
+    } catch (error) {
+      console.error('Voice input error:', error);
+      setIsRecording(false);
+      setCompanionEmotion('idle');
+    }
+  };
+
+  const speakResponse = async (text: string) => {
+    if (!voiceSettings.enabled || !voiceHelper.isAvailable()) return;
+
+    try {
+      setIsSpeaking(true);
+      await voiceHelper.speak(text, {
+        pitch: voiceSettings.pitch,
+        rate: voiceSettings.rate,
+        volume: voiceSettings.volume,
+      });
+      setIsSpeaking(false);
+    } catch (error) {
+      console.error('Speech error:', error);
+      setIsSpeaking(false);
+    }
+  };
+
+  const toggleSpeech = () => {
+    if (isSpeaking) {
+      voiceHelper.stop();
+      setIsSpeaking(false);
     }
   };
 
@@ -385,7 +447,7 @@ export default function CompanionScreen() {
 
       setCompanionEmotion(emotion);
 
-      setTimeout(() => {
+      setTimeout(async () => {
         const companionMessage: Message = {
           id: (Date.now() + 1).toString(),
           text: response,
@@ -397,6 +459,10 @@ export default function CompanionScreen() {
         setIsTyping(false);
         setIsSending(false);
         setTimeout(() => setCompanionEmotion('idle'), 3000);
+
+        if (voiceSettings.enabled && voiceSettings.autoSpeak) {
+          await speakResponse(response);
+        }
       }, 800);
     } catch (error) {
       console.error('AI response error:', error);
@@ -537,6 +603,27 @@ export default function CompanionScreen() {
     },
     sendButtonDisabled: {
       opacity: 0.5,
+    },
+    voiceButton: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: `${theme.primary}20`,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 8,
+    },
+    voiceButtonActive: {
+      backgroundColor: theme.primary,
+    },
+    speakingButton: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: `${theme.primary}20`,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 8,
     },
     companionIcon: {
       marginRight: 8,
@@ -701,19 +788,34 @@ export default function CompanionScreen() {
       </ScrollView>
 
       <View style={styles.inputContainer}>
+        {voiceHelper.isRecognitionAvailable() && (
+          <TouchableOpacity
+            style={[styles.voiceButton, isRecording && styles.voiceButtonActive]}
+            onPress={handleVoiceInput}
+            disabled={isRecording}
+          >
+            <Mic size={20} color={isRecording ? '#FFFFFF' : theme.primary} />
+          </TouchableOpacity>
+        )}
         <TextInput
           style={styles.input}
-          placeholder="Type your message..."
+          placeholder={isRecording ? "Listening..." : "Type your message..."}
           placeholderTextColor={theme.textSecondary}
           value={inputText}
           onChangeText={setInputText}
           multiline
           maxLength={500}
+          editable={!isRecording}
         />
+        {isSpeaking && (
+          <TouchableOpacity style={styles.speakingButton} onPress={toggleSpeech}>
+            <Volume2 size={20} color={theme.primary} />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
           onPress={sendMessage}
-          disabled={!inputText.trim()}
+          disabled={!inputText.trim() || isRecording}
         >
           <Send size={24} color="#FFFFFF" />
         </TouchableOpacity>
