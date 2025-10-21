@@ -28,6 +28,7 @@ import { getAIResponse, trackUserActivity } from '@/lib/companionAI';
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import AchievementCelebration from '@/components/AchievementCelebration';
+import AnimatedCompanion from '@/components/AnimatedCompanion';
 
 interface Message {
   id: string;
@@ -182,6 +183,8 @@ export default function CompanionScreen() {
   const [isSending, setIsSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [celebrationAchievement, setCelebrationAchievement] = useState<any>(null);
+  const [companionEmotion, setCompanionEmotion] = useState<'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'celebrating'>('idle');
+  const [companionAppearance, setCompanionAppearance] = useState<any>(null);
   const typingOpacity = useSharedValue(0.6);
 
   const scrollViewRef = useRef<ScrollView>(null);
@@ -209,11 +212,26 @@ export default function CompanionScreen() {
   useEffect(() => {
     if (!authLoading) {
       showInitialGreeting();
+      loadCompanionAppearance();
       if (user?.id) {
         setTimeout(() => checkForNewAchievements(user.id), 1000);
       }
     }
   }, [authLoading]);
+
+  const loadCompanionAppearance = async () => {
+    if (!user?.id) return;
+
+    const { data } = await supabase
+      .from('companion_appearance')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (data) {
+      setCompanionAppearance(data);
+    }
+  };
 
   const showInitialGreeting = async () => {
     const greetings = [
@@ -273,12 +291,14 @@ export default function CompanionScreen() {
 
       if (secondsAgo < 5 && latest.achievements) {
         console.log('🎉 SHOWING CELEBRATION!', latest.achievements);
+        setCompanionEmotion('celebrating');
         setCelebrationAchievement({
           name: latest.achievements.name,
           description: latest.achievements.description,
           points: latest.achievements.points,
           category: latest.achievements.category,
         });
+        setTimeout(() => setCompanionEmotion('idle'), 4000);
       } else {
         console.log('Achievement too old or missing data', { secondsAgo, hasData: !!latest.achievements });
       }
@@ -337,6 +357,7 @@ export default function CompanionScreen() {
     const userText = inputText;
     setInputText('');
     setIsTyping(true);
+    setCompanionEmotion('listening');
 
     try {
       console.log('Calling getAIResponse with userText:', userText);
@@ -356,6 +377,14 @@ export default function CompanionScreen() {
         }, 500);
       }
 
+      const sentiment = detectSentiment(userText);
+      let emotion: 'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'celebrating' = 'speaking';
+
+      if (sentiment === 'positive') emotion = 'happy';
+      else if (sentiment === 'sad' || sentiment === 'anxious') emotion = 'concerned';
+
+      setCompanionEmotion(emotion);
+
       setTimeout(() => {
         const companionMessage: Message = {
           id: (Date.now() + 1).toString(),
@@ -367,6 +396,7 @@ export default function CompanionScreen() {
         setMessages((prev) => [...prev, companionMessage]);
         setIsTyping(false);
         setIsSending(false);
+        setTimeout(() => setCompanionEmotion('idle'), 3000);
       }, 800);
     } catch (error) {
       console.error('AI response error:', error);
@@ -578,7 +608,6 @@ export default function CompanionScreen() {
         style={styles.headerGradient}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-          <Sparkles size={28} color="#FFFFFF" style={styles.companionIcon} />
           <View style={{ flex: 1 }}>
             <Text style={styles.headerTitle}>Buddy</Text>
             <Text style={styles.headerSubtitle}>Your Wellness Companion</Text>
@@ -596,6 +625,21 @@ export default function CompanionScreen() {
           >
             <LifeBuoy size={20} color="#FFFFFF" />
           </TouchableOpacity>
+        </View>
+        <View style={{ alignItems: 'center', marginTop: 16 }}>
+          <AnimatedCompanion
+            companionType={companionAppearance?.companion_type || 'orb'}
+            emotion={companionEmotion}
+            primaryColor={companionAppearance?.primary_color}
+            secondaryColor={companionAppearance?.secondary_color}
+            size={companionAppearance?.size === 'small' ? 80 : companionAppearance?.size === 'large' ? 140 : 100}
+            onPress={() => {
+              if (messages.length > 0) {
+                setCompanionEmotion('happy');
+                setTimeout(() => setCompanionEmotion('idle'), 2000);
+              }
+            }}
+          />
         </View>
       </LinearGradient>
 

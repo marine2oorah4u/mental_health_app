@@ -192,7 +192,21 @@ export default function ProfileScreen() {
             onPress={() => router.push('/(tabs)/companion-settings')}
           >
             <Settings size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Customize Buddy</Text>
+            <Text style={styles.buttonText}>Personality Settings</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { marginBottom: 12 }]}
+            onPress={() => router.push('/(tabs)/companion-appearance')}
+          >
+            <Palette size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Customize Appearance</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { marginBottom: 12 }]}
+            onPress={() => router.push('/(tabs)/companion-environment')}
+          >
+            <Settings size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Customize Environment</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
