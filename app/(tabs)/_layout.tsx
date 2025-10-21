@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Home, MessageCircle, Users, User } from 'lucide-react-native';
+import { Home, MessageCircle, Users, User, Heart } from 'lucide-react-native';
 
 export default function TabLayout() {
   const { theme } = useTheme();
@@ -53,6 +53,15 @@ export default function TabLayout() {
           title: 'Community',
           tabBarIcon: ({ size, color }) => (
             <Users size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="resources"
+        options={{
+          title: 'Resources',
+          tabBarIcon: ({ size, color }) => (
+            <Heart size={size} color={color} />
           ),
         }}
       />
@@ -127,6 +136,18 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="music-library"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="daily-checkin"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="admin"
         options={{
           href: null,
         }}

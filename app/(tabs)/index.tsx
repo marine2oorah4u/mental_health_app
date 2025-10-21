@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Heart, Wind, Music, BookOpen, Phone, Sparkles } from 'lucide-react-native';
+import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CheckCircle, Calendar } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -148,6 +148,25 @@ export default function HomeScreen() {
       </LinearGradient>
 
       <ScrollView style={styles.content}>
+        <View style={styles.section}>
+          <TouchableOpacity
+            style={[styles.dailyCard, { backgroundColor: `${theme.primary}15` }]}
+            onPress={() => router.push('/(tabs)/daily-checkin')}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+              <Calendar size={28} color={theme.primary} />
+              <Text style={[styles.dailyCardTitle, { marginBottom: 0, marginLeft: 12 }]}>Daily Check-in</Text>
+            </View>
+            <Text style={styles.dailyCardText}>
+              Take a moment to check in with yourself. How are you feeling today?
+            </Text>
+            <View style={[styles.exploreButton, { backgroundColor: theme.primary }]}>
+              <CheckCircle size={20} color="#FFFFFF" />
+              <Text style={styles.exploreButtonText}>Start Check-in</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           <View style={styles.quickActionsGrid}>

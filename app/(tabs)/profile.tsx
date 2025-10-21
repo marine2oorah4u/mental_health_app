@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useState } from 'react';
 import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -9,6 +10,8 @@ export default function ProfileScreen() {
   const { theme, fontSize, themeName, setTheme } = useTheme();
   const { user, signOut } = useAuth();
   const router = useRouter();
+  const [tapCount, setTapCount] = useState(0);
+  const [lastTapTime, setLastTapTime] = useState(0);
 
   const handleSignOut = async () => {
     await signOut();
@@ -140,7 +143,24 @@ export default function ProfileScreen() {
         end={{ x: 1, y: 1 }}
         style={styles.headerGradient}
       >
-        <Text style={styles.headerTitle}>Profile</Text>
+        <TouchableOpacity
+          onPress={() => {
+            const now = Date.now();
+            if (now - lastTapTime < 500) {
+              const newCount = tapCount + 1;
+              setTapCount(newCount);
+              if (newCount === 5) {
+                router.push('/(tabs)/admin');
+                setTapCount(0);
+              }
+            } else {
+              setTapCount(1);
+            }
+            setLastTapTime(now);
+          }}
+        >
+          <Text style={styles.headerTitle}>Profile</Text>
+        </TouchableOpacity>
         <Text style={styles.headerSubtitle}>
           {user ? user.email : 'Anonymous User'}
         </Text>
