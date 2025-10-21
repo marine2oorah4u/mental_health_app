@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2 } from 'lucide-react-native';
+import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ProfileScreen() {
@@ -239,6 +239,24 @@ export default function ProfileScreen() {
           >
             <Trophy size={24} color={theme.text} />
             <Text style={styles.buttonText}>Achievements</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Wellness</Text>
+          <TouchableOpacity
+            style={[styles.button, { marginBottom: 12 }]}
+            onPress={() => router.push('/(tabs)/music-library')}
+          >
+            <Music size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Music Library</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push('/(tabs)/sounds')}
+          >
+            <Volume2 size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Ambient Sounds</Text>
           </TouchableOpacity>
         </View>
 

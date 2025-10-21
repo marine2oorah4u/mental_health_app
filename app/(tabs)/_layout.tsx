@@ -125,6 +125,12 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="music-library"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

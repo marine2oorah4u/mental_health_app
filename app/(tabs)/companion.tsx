@@ -794,7 +794,7 @@ export default function CompanionScreen() {
             <AmbientSoundPlayer
               environment={companionEnvironment.theme || 'cozy'}
               initialVolume={companionEnvironment.ambient_volume || 0.3}
-              autoPlay={false}
+              autoPlay={true}
             />
           </View>
         )}

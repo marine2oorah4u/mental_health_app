@@ -142,7 +142,55 @@ INSERT INTO decoration_catalog (name, emoji, category, size, unlock_requirement,
   -- Legendary items
   ('Treasure Chest', '🎁', 'furniture', 2, 'default', 'legendary'),
   ('Rainbow', '🌈', 'art', 4, 'default', 'legendary'),
-  ('Star', '⭐', 'lighting', 1, 'default', 'legendary')
+  ('Star', '⭐', 'lighting', 1, 'default', 'legendary'),
+
+  -- More Common items
+  ('Pillow', '🛏️', 'furniture', 1, 'default', 'common'),
+  ('Laptop', '💻', 'furniture', 1, 'default', 'common'),
+  ('Tea Cup', '🍵', 'furniture', 1, 'default', 'common'),
+  ('Umbrella', '☂️', 'furniture', 1, 'default', 'common'),
+  ('Basketball', '🏀', 'toys', 1, 'default', 'common'),
+  ('Dice', '🎲', 'toys', 1, 'default', 'common'),
+  ('Balloon', '🎈', 'toys', 1, 'default', 'common'),
+  ('Camera', '📷', 'furniture', 1, 'default', 'common'),
+  ('Telescope', '🔭', 'furniture', 1, 'default', 'common'),
+  ('Globe', '🌍', 'furniture', 1, 'default', 'common'),
+
+  -- Food items (common)
+  ('Cookie', '🍪', 'furniture', 1, 'default', 'common'),
+  ('Cake Slice', '🍰', 'furniture', 1, 'default', 'common'),
+  ('Pizza', '🍕', 'furniture', 1, 'default', 'common'),
+  ('Apple', '🍎', 'furniture', 1, 'default', 'common'),
+
+  -- More Plants (common)
+  ('Tree', '🌳', 'plants', 2, 'default', 'common'),
+  ('Herb Pot', '🌿', 'plants', 1, 'default', 'common'),
+  ('Tulip', '🌷', 'plants', 1, 'default', 'common'),
+  ('Cherry Blossom', '🌸', 'plants', 1, 'default', 'common'),
+
+  -- More Rare items
+  ('Crystal Ball', '🔮', 'art', 1, 'default', 'rare'),
+  ('Magic Wand', '🪄', 'toys', 1, 'default', 'rare'),
+  ('Crown', '👑', 'art', 1, 'default', 'rare'),
+  ('Gem', '💎', 'art', 1, 'default', 'rare'),
+  ('Headphones', '🎧', 'furniture', 1, 'default', 'rare'),
+  ('Microphone', '🎤', 'furniture', 1, 'default', 'rare'),
+  ('Guitar', '🎸', 'furniture', 2, 'default', 'rare'),
+  ('Drum', '🥁', 'furniture', 1, 'default', 'rare'),
+
+  -- Seasonal/Special (rare)
+  ('Jack-o-Lantern', '🎃', 'art', 1, 'default', 'rare'),
+  ('Christmas Tree', '🎄', 'plants', 2, 'default', 'rare'),
+  ('Snowman', '⛄', 'art', 1, 'default', 'rare'),
+  ('Fireworks', '🎆', 'art', 1, 'default', 'rare'),
+
+  -- More Legendary
+  ('Rocket', '🚀', 'furniture', 2, 'default', 'legendary'),
+  ('UFO', '🛸', 'furniture', 2, 'default', 'legendary'),
+  ('Dragon', '🐉', 'toys', 2, 'default', 'legendary'),
+  ('Unicorn', '🦄', 'toys', 1, 'default', 'legendary'),
+  ('Trophy', '🏆', 'art', 1, 'default', 'legendary'),
+  ('Crown Jewels', '💍', 'art', 1, 'default', 'legendary')
 ON CONFLICT DO NOTHING;
 
 -- Function to auto-unlock default decorations for new users
