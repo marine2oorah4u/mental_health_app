@@ -517,7 +517,7 @@ export default function CompanionScreen() {
     headerGradient: {
       paddingTop: 60,
       paddingHorizontal: 20,
-      paddingBottom: 24,
+      paddingBottom: 32,
     },
     headerTitle: {
       fontSize: getFontSize(fontSize, 'title'),
@@ -730,7 +730,7 @@ export default function CompanionScreen() {
             <LifeBuoy size={20} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        <View style={{ alignItems: 'center', marginTop: 16 }}>
+        <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 8 }}>
           <AnimatedCompanion
             companionType={companionAppearance?.companion_type || 'orb'}
             emotion={companionEmotion}
@@ -744,6 +744,14 @@ export default function CompanionScreen() {
               }
             }}
           />
+          <Text style={{
+            color: 'rgba(255, 255, 255, 0.8)',
+            fontSize: getFontSize(fontSize, 'small'),
+            marginTop: 8,
+            fontStyle: 'italic'
+          }}>
+            Tap me for a smile!
+          </Text>
         </View>
       </LinearGradient>
 
