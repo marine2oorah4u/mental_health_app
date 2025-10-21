@@ -356,7 +356,7 @@ export default function AchievementCelebration({ achievement, onDismiss }: Props
   const { theme, fontSize } = useTheme();
   const [visible, setVisible] = useState(false);
   const [showCard, setShowCard] = useState(false);
-  const dismissTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (achievement) {

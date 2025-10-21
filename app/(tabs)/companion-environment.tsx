@@ -26,7 +26,7 @@ import {
   VolumeX,
 } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
-import ColorPicker from '@/components/ColorPicker';
+import SimpleColorPicker from '@/components/SimpleColorPicker';
 
 interface CompanionEnvironment {
   theme: string;
@@ -48,42 +48,42 @@ const themeOptions = [
     label: 'Cozy Room',
     description: 'Warm, comfortable indoor space',
     icon: Home,
-    gradient: ['#FFC9A3', '#FFE5D9'],
+    gradient: ['#FFC9A3', '#FFE5D9'] as [string, string],
   },
   {
     value: 'garden',
     label: 'Peaceful Garden',
     description: 'Serene outdoor garden',
     icon: TreePine,
-    gradient: ['#A7F3D0', '#D1FAE5'],
+    gradient: ['#A7F3D0', '#D1FAE5'] as [string, string],
   },
   {
     value: 'office',
     label: 'Modern Office',
     description: 'Clean, professional workspace',
     icon: Building2,
-    gradient: ['#DBEAFE', '#EFF6FF'],
+    gradient: ['#DBEAFE', '#EFF6FF'] as [string, string],
   },
   {
     value: 'beach',
     label: 'Beach Paradise',
     description: 'Relaxing beach scene',
     icon: Palmtree,
-    gradient: ['#A5F3FC', '#FDE68A'],
+    gradient: ['#A5F3FC', '#FDE68A'] as [string, string],
   },
   {
     value: 'mountain',
     label: 'Mountain Retreat',
     description: 'Peaceful mountain view',
     icon: Mountain,
-    gradient: ['#C7D2FE', '#E0E7FF'],
+    gradient: ['#C7D2FE', '#E0E7FF'] as [string, string],
   },
   {
     value: 'space',
     label: 'Starry Space',
     description: 'Cosmic star field',
     icon: Sparkles,
-    gradient: ['#4C1D95', '#1E1B4B'],
+    gradient: ['#4C1D95', '#1E1B4B'] as [string, string],
   },
 ];
 
@@ -558,9 +558,9 @@ export default function CompanionEnvironmentScreen() {
             <View style={[styles.colorPreview, { backgroundColor: environment.wall_color }]} />
           </TouchableOpacity>
           {showWallPicker && (
-            <ColorPicker
+            <SimpleColorPicker
               selectedColor={environment.wall_color}
-              onSelectColor={(color) => {
+              onSelectColor={(color: string) => {
                 updateEnvironment('wall_color', color);
                 setShowWallPicker(false);
               }}

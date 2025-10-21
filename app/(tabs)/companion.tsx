@@ -368,14 +368,14 @@ export default function CompanionScreen() {
 
       console.log('Latest achievement:', latest, 'Seconds ago:', secondsAgo);
 
-      if (secondsAgo < 5 && latest.achievements) {
+      if (secondsAgo < 5 && latest.achievements && typeof latest.achievements === 'object' && 'name' in latest.achievements) {
         console.log('🎉 SHOWING CELEBRATION!', latest.achievements);
         setCompanionEmotion('celebrating');
         setCelebrationAchievement({
-          name: latest.achievements.name,
-          description: latest.achievements.description,
-          points: latest.achievements.points,
-          category: latest.achievements.category,
+          name: (latest.achievements as any).name,
+          description: (latest.achievements as any).description,
+          points: (latest.achievements as any).points,
+          category: (latest.achievements as any).category,
         });
         setTimeout(() => setCompanionEmotion('idle'), 4000);
       } else {

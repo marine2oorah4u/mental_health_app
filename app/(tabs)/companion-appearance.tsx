@@ -11,7 +11,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Palette, Check, Sparkles } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
-import ColorPicker from '@/components/ColorPicker';
+import SimpleColorPicker from '@/components/SimpleColorPicker';
 import AnimatedCompanion from '@/components/AnimatedCompanion';
 
 interface CompanionAppearance {
@@ -402,9 +402,9 @@ export default function CompanionAppearanceScreen() {
             />
           </TouchableOpacity>
           {showPrimaryPicker && (
-            <ColorPicker
+            <SimpleColorPicker
               selectedColor={appearance.primary_color}
-              onSelectColor={(color) => {
+              onSelectColor={(color: string) => {
                 updateAppearance('primary_color', color);
                 setShowPrimaryPicker(false);
               }}
@@ -421,9 +421,9 @@ export default function CompanionAppearanceScreen() {
             />
           </TouchableOpacity>
           {showSecondaryPicker && (
-            <ColorPicker
+            <SimpleColorPicker
               selectedColor={appearance.secondary_color}
-              onSelectColor={(color) => {
+              onSelectColor={(color: string) => {
                 updateAppearance('secondary_color', color);
                 setShowSecondaryPicker(false);
               }}

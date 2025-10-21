@@ -99,7 +99,7 @@ class SoundManager {
   private currentTrackId: string | null = null;
   private isPlaying: boolean = false;
   private volume: number = 0.5;
-  private fadeInterval: NodeJS.Timeout | null = null;
+  private fadeInterval: ReturnType<typeof setInterval> | null = null;
 
   async initialize() {
     try {

@@ -1032,17 +1032,26 @@ export async function addGoalCheckIn(userId: string, goalId: string, note: strin
     sentiment,
   });
 
+  const { data: goal } = await supabase
+    .from('user_goals')
+    .select('progress_notes')
+    .eq('id', goalId)
+    .maybeSingle();
+
+  const existingNotes = goal?.progress_notes || [];
+  const updatedNotes = [
+    ...existingNotes,
+    {
+      note,
+      timestamp: new Date().toISOString(),
+    },
+  ];
+
   await supabase
     .from('user_goals')
     .update({
       updated_at: new Date().toISOString(),
-      progress_notes: supabase.rpc('jsonb_array_append', {
-        arr: supabase.raw('progress_notes'),
-        elem: JSON.stringify({
-          note,
-          timestamp: new Date().toISOString(),
-        }),
-      }),
+      progress_notes: updatedNotes,
     })
     .eq('id', goalId);
 }

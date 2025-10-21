@@ -138,3 +138,5 @@ export function ColorPicker({ label, color, onChange }: ColorPickerProps) {
     </View>
   );
 }
+
+export default ColorPicker;
