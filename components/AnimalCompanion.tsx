@@ -114,58 +114,14 @@ export default function AnimalCompanion({
     return animals[animalType];
   };
 
-  const getFacialExpression = () => {
-    const expressions: Record<string, string> = {
-      idle: '😊',
-      listening: '👂',
-      speaking: '😄',
-      happy: '😁',
-      concerned: '🥺',
-      excited: '🤩',
-      thinking: '🤔',
-    };
-    return expressions[emotion] || '😊';
-  };
-
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <Animated.View style={[styles.container, animatedStyle, { width: size, height: size }]}>
-        {/* Animal body */}
+        {/* Animal character - clean, just the animal */}
         <View style={styles.animalBody}>
-          <View style={styles.animalHead}>
-            <View style={styles.animalEmoji}>
-              {/* Main animal character */}
-              <Animated.Text style={{ fontSize: size * 0.6 }}>
-                {getAnimalEmoji()}
-              </Animated.Text>
-            </View>
-
-            {/* Facial expression overlay */}
-            <View style={styles.expressionOverlay}>
-              <Animated.Text style={{ fontSize: size * 0.35 }}>
-                {getFacialExpression()}
-              </Animated.Text>
-            </View>
-          </View>
-
-          {/* Emotion indicators */}
-          {emotion === 'listening' && (
-            <View style={styles.indicator}>
-              <Animated.Text style={{ fontSize: size * 0.2 }}>🎤</Animated.Text>
-            </View>
-          )}
-
-          {emotion === 'speaking' && (
-            <View style={styles.indicator}>
-              <Animated.Text style={{ fontSize: size * 0.2 }}>💬</Animated.Text>
-            </View>
-          )}
-
-          {emotion === 'thinking' && (
-            <View style={styles.indicator}>
-              <Animated.Text style={{ fontSize: size * 0.2 }}>💭</Animated.Text>
-            </View>
-          )}
+          <Animated.Text style={{ fontSize: size * 0.8, textAlign: 'center' }}>
+            {getAnimalEmoji()}
+          </Animated.Text>
         </View>
 
         {/* Glow effect based on emotion */}

@@ -8,7 +8,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
@@ -68,6 +68,7 @@ export default function CommunityScreen() {
   const [selectedCategory, setSelectedCategory] = useState('Personal');
   const [loading, setLoading] = useState(false);
   const [showAchievements, setShowAchievements] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     loadPosts();
@@ -79,16 +80,24 @@ export default function CommunityScreen() {
 
     const scheduleNextRefresh = () => {
       const interval = getRandomInterval();
-      console.log(`Next feed refresh in ${interval / 1000} seconds`);
-      return setTimeout(() => {
+      console.log(`[Community Feed] Next refresh in ${interval / 1000} seconds`);
+
+      timerRef.current = setTimeout(() => {
+        console.log('[Community Feed] Refreshing now...');
         loadAchievementFeed();
         loadPosts();
+        loadReactions();
         scheduleNextRefresh();
       }, interval);
     };
 
-    const timer = scheduleNextRefresh();
-    return () => clearTimeout(timer);
+    scheduleNextRefresh();
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
   }, []);
 
   const loadAchievementFeed = async () => {
