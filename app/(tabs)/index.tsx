@@ -77,7 +77,7 @@ export default function HomeScreen() {
     headerGradient: {
       paddingTop: 20,
       paddingHorizontal: 24,
-      paddingBottom: 60,
+      paddingBottom: 30,
     },
     greeting: {
       fontSize: getFontSize(fontSize, 'xlarge'),
