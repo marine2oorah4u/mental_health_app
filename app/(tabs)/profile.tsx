@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
-import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2, Heart } from 'lucide-react-native';
+import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2, Heart, Pill } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ProfileScreen() {
@@ -279,11 +279,18 @@ export default function ProfileScreen() {
             <Text style={styles.buttonText}>Music Library</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, { marginBottom: 12 }]}
             onPress={() => router.push('/(tabs)/sounds')}
           >
             <Volume2 size={24} color={theme.text} />
             <Text style={styles.buttonText}>Ambient Sounds</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push('/(tabs)/medications')}
+          >
+            <Pill size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Medication Tracker</Text>
           </TouchableOpacity>
         </View>
 
