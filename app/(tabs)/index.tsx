@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CheckCircle, Calendar, LifeBuoy, MessageSquare, AlertTriangle } from 'lucide-react-native';
+import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CircleCheck as CheckCircle, Calendar, LifeBuoy, MessageSquare, TriangleAlert as AlertTriangle } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
