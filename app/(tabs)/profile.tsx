@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
-import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2, Heart, Pill } from 'lucide-react-native';
+import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2, Heart, Pill, Image } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ProfileScreen() {
@@ -197,11 +197,19 @@ export default function ProfileScreen() {
           </View>
 
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, { marginBottom: 12 }]}
             onPress={() => router.push('/(tabs)/theme-builder')}
           >
             <Palette size={24} color={theme.text} />
             <Text style={styles.buttonText}>Create Custom Theme</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push('/(tabs)/background-settings')}
+          >
+            <Image size={24} color={theme.text} />
+            <Text style={styles.buttonText}>Background Patterns</Text>
           </TouchableOpacity>
         </View>
 

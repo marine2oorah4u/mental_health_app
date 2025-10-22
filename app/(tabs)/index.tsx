@@ -27,7 +27,14 @@ import {
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn } from 'react-native-reanimated';
-import { FloatingCircles, LeafDecoration, SparkleDecoration, HeartIllustration } from '@/components/Illustrations';
+import {
+  BotanicalPattern,
+  GeometricPattern,
+  WavyPattern,
+  DotsPattern,
+  BlobsPattern,
+  ConfettiPattern
+} from '@/components/BackgroundPatterns';
 
 const { width } = Dimensions.get('window');
 
@@ -123,6 +130,7 @@ export default function HomeScreen() {
   const [userName, setUserName] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [greeting, setGreeting] = useState('');
+  const [backgroundPattern, setBackgroundPattern] = useState('botanical');
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -148,6 +156,16 @@ export default function HomeScreen() {
       setUserName(profile.username);
     }
 
+    const { data: prefs } = await supabase
+      .from('user_preferences')
+      .select('background_pattern')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (prefs?.background_pattern) {
+      setBackgroundPattern(prefs.background_pattern);
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const { data: checkin } = await supabase
       .from('daily_checkins')
@@ -163,24 +181,27 @@ export default function HomeScreen() {
 
   const isDark = theme.text === '#FFFFFF';
 
+  const renderBackgroundPattern = () => {
+    switch (backgroundPattern) {
+      case 'geometric':
+        return <GeometricPattern isDark={isDark} />;
+      case 'wavy':
+        return <WavyPattern isDark={isDark} />;
+      case 'dots':
+        return <DotsPattern isDark={isDark} />;
+      case 'blobs':
+        return <BlobsPattern isDark={isDark} />;
+      case 'confetti':
+        return <ConfettiPattern isDark={isDark} />;
+      case 'botanical':
+      default:
+        return <BotanicalPattern isDark={isDark} />;
+    }
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <FloatingCircles isDark={isDark} />
-
-      <View style={styles.decorativeElements}>
-        <Animated.View entering={FadeIn.duration(1000).delay(200)} style={styles.leafTopLeft}>
-          <LeafDecoration size={60} color="#10B981" />
-        </Animated.View>
-        <Animated.View entering={FadeIn.duration(1000).delay(400)} style={styles.leafTopRight}>
-          <LeafDecoration size={50} color="#34D399" />
-        </Animated.View>
-        <Animated.View entering={FadeIn.duration(1000).delay(600)} style={styles.sparkleTop}>
-          <SparkleDecoration size={40} color="#FCD34D" />
-        </Animated.View>
-        <Animated.View entering={FadeIn.duration(1000).delay(800)} style={styles.heartDecoration}>
-          <HeartIllustration size={100} isDark={isDark} />
-        </Animated.View>
-      </View>
+      {renderBackgroundPattern()}
 
       <ScrollView
         style={styles.content}
@@ -310,39 +331,6 @@ function FeatureCardComponent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  decorativeElements: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: 1,
-    pointerEvents: 'none',
-  },
-  leafTopLeft: {
-    position: 'absolute',
-    top: 250,
-    left: -5,
-    transform: [{ rotate: '-25deg' }],
-    opacity: 0.6,
-  },
-  leafTopRight: {
-    position: 'absolute',
-    top: 300,
-    right: -5,
-    transform: [{ rotate: '35deg' }],
-    opacity: 0.6,
-  },
-  sparkleTop: {
-    position: 'absolute',
-    top: 380,
-    left: 30,
-    opacity: 0.7,
-  },
-  heartDecoration: {
-    position: 'absolute',
-    bottom: 180,
-    right: 10,
-    opacity: 0.5,
   },
   header: {
     paddingTop: 60,
