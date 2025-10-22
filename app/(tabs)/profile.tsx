@@ -12,12 +12,6 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [tapCount, setTapCount] = useState(0);
   const [lastTapTime, setLastTapTime] = useState(0);
-  const [, forceUpdate] = useState({});
-
-  // Force re-render when theme changes
-  useEffect(() => {
-    forceUpdate({});
-  }, [themeName, theme]);
 
   const handleSignOut = async () => {
     await signOut();

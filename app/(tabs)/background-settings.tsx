@@ -96,7 +96,7 @@ export default function BackgroundSettingsScreen() {
 
     const { data: existing } = await supabase
       .from('user_preferences')
-      .select('id')
+      .select('user_id')
       .eq('user_id', user.id)
       .maybeSingle();
 
