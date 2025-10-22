@@ -187,6 +187,12 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="daily-inspiration"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }
