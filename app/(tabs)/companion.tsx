@@ -23,12 +23,13 @@ import Animated, {
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Send, Sparkles, Loader, LifeBuoy } from 'lucide-react-native';
+import { Send, Loader, LifeBuoy } from 'lucide-react-native';
 import { getAIResponse, trackUserActivity } from '@/lib/companionAI';
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import AchievementCelebration from '@/components/AchievementCelebration';
 import AnimalCompanion from '@/components/AnimalCompanion';
+import EmojiParticles from '@/components/EmojiParticles';
 
 interface Message {
   id: string;
@@ -184,6 +185,8 @@ export default function CompanionScreen() {
   const [loading, setLoading] = useState(true);
   const [celebrationAchievement, setCelebrationAchievement] = useState<any>(null);
   const [companionEmotion, setCompanionEmotion] = useState<'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'celebrating'>('idle');
+  const [particleTrigger, setParticleTrigger] = useState(0);
+  const [particleMood, setParticleMood] = useState<'happy' | 'sad' | 'anxious' | 'calm' | 'excited' | 'tired'>('happy');
   const typingOpacity = useSharedValue(0.6);
 
   const scrollViewRef = useRef<ScrollView>(null);
@@ -293,10 +296,40 @@ export default function CompanionScreen() {
 
   const detectSentiment = (message: string): string => {
     const msg = message.toLowerCase();
-    if (msg.match(/anxious|worried|stress|panic/)) return 'anxious';
-    if (msg.match(/sad|down|depressed|hopeless/)) return 'sad';
-    if (msg.match(/happy|good|great|better/)) return 'positive';
-    if (msg.match(/angry|mad|frustrated/)) return 'stressed';
+    if (msg.match(/anxious|worried|stress|panic/)) {
+      setParticleMood('anxious');
+      setParticleTrigger(prev => prev + 1);
+      return 'anxious';
+    }
+    if (msg.match(/sad|down|depressed|hopeless/)) {
+      setParticleMood('sad');
+      setParticleTrigger(prev => prev + 1);
+      return 'sad';
+    }
+    if (msg.match(/happy|good|great|better/)) {
+      setParticleMood('happy');
+      setParticleTrigger(prev => prev + 1);
+      return 'positive';
+    }
+    if (msg.match(/angry|mad|frustrated/)) {
+      setParticleMood('anxious');
+      setParticleTrigger(prev => prev + 1);
+      return 'stressed';
+    }
+    if (msg.match(/tired|exhausted|drained/)) {
+      setParticleMood('tired');
+      setParticleTrigger(prev => prev + 1);
+      return 'tired';
+    }
+    if (msg.match(/calm|peaceful|relaxed/)) {
+      setParticleMood('calm');
+      setParticleTrigger(prev => prev + 1);
+      return 'calm';
+    }
+    if (msg.match(/excited|energetic|pumped/)) {
+      setParticleMood('excited');
+      setParticleTrigger(prev => prev + 1);
+      return 'excited';
     return 'neutral';
   };
 
@@ -606,7 +639,7 @@ export default function CompanionScreen() {
     return (
       <View style={styles.loadingContainer}>
         <Animated.View entering={FadeIn.duration(800)}>
-          <Sparkles size={48} color={theme.primary} />
+          <Loader size={48} color={theme.primary} />
         </Animated.View>
         <Animated.Text
           entering={FadeIn.duration(800).delay(300)}
@@ -650,19 +683,22 @@ export default function CompanionScreen() {
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 16, alignItems: 'center' }}>
-          <AnimalCompanion
-            animalType="cat"
-            emotion={
-              companionEmotion === 'celebrating' ? 'excited' :
-              companionEmotion === 'idle' ? 'idle' :
-              companionEmotion
-            }
-            size={140}
-            onPress={() => {
-              setCompanionEmotion('happy');
-              setTimeout(() => setCompanionEmotion('idle'), 2000);
-            }}
-          />
+          <View style={{ position: 'relative' }}>
+            <AnimalCompanion
+              animalType="cat"
+              emotion={
+                companionEmotion === 'celebrating' ? 'excited' :
+                companionEmotion === 'idle' ? 'idle' :
+                companionEmotion
+              }
+              size={140}
+              onPress={() => {
+                setCompanionEmotion('happy');
+                setTimeout(() => setCompanionEmotion('idle'), 2000);
+              }}
+            />
+            <EmojiParticles mood={particleMood} trigger={particleTrigger} />
+          </View>
         </View>
       </LinearGradient>
 
