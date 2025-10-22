@@ -19,6 +19,9 @@ interface UserPreferences {
   response_length: 'brief' | 'moderate' | 'detailed';
   conversation_style: 'casual' | 'professional' | 'friendly';
   use_name_frequency: 'rarely' | 'sometimes' | 'often';
+  religious_spiritual_support: boolean;
+  veteran_support: boolean;
+  lgbtq_support: boolean;
 }
 
 const personalityOptions = [
@@ -55,6 +58,9 @@ export default function CompanionSettingsScreen() {
     response_length: 'moderate',
     conversation_style: 'friendly',
     use_name_frequency: 'sometimes',
+    religious_spiritual_support: false,
+    veteran_support: false,
+    lgbtq_support: false,
   });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -78,6 +84,9 @@ export default function CompanionSettingsScreen() {
         response_length: data.response_length,
         conversation_style: data.conversation_style,
         use_name_frequency: data.use_name_frequency,
+        religious_spiritual_support: data.religious_spiritual_support || false,
+        veteran_support: data.veteran_support || false,
+        lgbtq_support: data.lgbtq_support || false,
       });
     }
   };
@@ -211,6 +220,38 @@ export default function CompanionSettingsScreen() {
       color: theme.text,
       lineHeight: getFontSize(fontSize, 'small') * 1.5,
     },
+    supportSection: {
+      backgroundColor: theme.surface,
+      borderRadius: 16,
+      padding: 20,
+      marginBottom: 24,
+    },
+    supportItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.border,
+    },
+    supportItemLast: {
+      borderBottomWidth: 0,
+    },
+    supportLabel: {
+      flex: 1,
+      marginRight: 16,
+    },
+    supportTitle: {
+      fontSize: getFontSize(fontSize, 'body'),
+      fontWeight: '600',
+      color: theme.text,
+      marginBottom: 4,
+    },
+    supportDescription: {
+      fontSize: getFontSize(fontSize, 'small'),
+      color: theme.textSecondary,
+      lineHeight: getFontSize(fontSize, 'small') * 1.4,
+    },
   });
 
   return (
@@ -325,6 +366,56 @@ export default function CompanionSettingsScreen() {
               <Text style={styles.optionDescription}>{option.description}</Text>
             </TouchableOpacity>
           ))}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Specialized Support</Text>
+          <View style={styles.supportSection}>
+            <View style={styles.supportItem}>
+              <View style={styles.supportLabel}>
+                <Text style={styles.supportTitle}>Religious & Spiritual Support</Text>
+                <Text style={styles.supportDescription}>
+                  Buddy can reference faith, prayer, and spirituality in conversations
+                </Text>
+              </View>
+              <Switch
+                value={preferences.religious_spiritual_support}
+                onValueChange={(value) => updatePreference('religious_spiritual_support', value)}
+                trackColor={{ false: theme.border, true: theme.primary }}
+                thumbColor="#FFFFFF"
+              />
+            </View>
+
+            <View style={styles.supportItem}>
+              <View style={styles.supportLabel}>
+                <Text style={styles.supportTitle}>Veteran Support</Text>
+                <Text style={styles.supportDescription}>
+                  Buddy understands military culture, PTSD, and veteran experiences
+                </Text>
+              </View>
+              <Switch
+                value={preferences.veteran_support}
+                onValueChange={(value) => updatePreference('veteran_support', value)}
+                trackColor={{ false: theme.border, true: theme.primary }}
+                thumbColor="#FFFFFF"
+              />
+            </View>
+
+            <View style={[styles.supportItem, styles.supportItemLast]}>
+              <View style={styles.supportLabel}>
+                <Text style={styles.supportTitle}>LGBTQ+ Affirmative Support</Text>
+                <Text style={styles.supportDescription}>
+                  Buddy is affirming and understands LGBTQ+ experiences and challenges
+                </Text>
+              </View>
+              <Switch
+                value={preferences.lgbtq_support}
+                onValueChange={(value) => updatePreference('lgbtq_support', value)}
+                trackColor={{ false: theme.border, true: theme.primary }}
+                thumbColor="#FFFFFF"
+              />
+            </View>
+          </View>
         </View>
 
         <TouchableOpacity

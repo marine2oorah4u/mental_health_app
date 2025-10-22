@@ -282,6 +282,26 @@ export default function ResourcesScreen() {
         </View>
       </TouchableOpacity>
 
+      <TouchableOpacity
+        style={[styles.crisisBar, { backgroundColor: '#059669' }]}
+        onPress={() => handlePhoneCall('988', 'Veterans Crisis Line')}
+      >
+        <AlertCircle size={24} color="#FFFFFF" />
+        <Text style={styles.crisisText}>
+          Veterans: Press 1 after dialing 988 or text 838255
+        </Text>
+        <View style={[styles.crisisButton, { backgroundColor: '#FFFFFF' }]}>
+          <Text style={[styles.crisisButtonText, { color: '#059669' }]}>CALL</Text>
+        </View>
+      </TouchableOpacity>
+
+      <View style={[styles.crisisBar, { backgroundColor: '#F59E0B' }]}>
+        <AlertCircle size={24} color="#FFFFFF" />
+        <Text style={[styles.crisisText, { flex: 1 }]}>
+          This app is NOT a substitute for professional medical care. Always consult with healthcare providers.
+        </Text>
+      </View>
+
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

@@ -602,7 +602,10 @@ export async function getAIResponse(
     companion_personality: 'balanced',
     response_length: 'moderate',
     conversation_style: 'friendly',
-    use_name_frequency: 'sometimes'
+    use_name_frequency: 'sometimes',
+    religious_spiritual_support: false,
+    veteran_support: false,
+    lgbtq_support: false
   };
 
   console.log('State and memories loaded:', { state, memoriesCount: memories.length, preferences });
@@ -698,6 +701,9 @@ RESPONSE STYLE:
 - Be direct and honest, not overly formal
 - Vary your sentence structure and word choice
 - Sound like a trusted friend, not a therapist or chatbot
+- Use emojis occasionally to express emotion (😊 🌟 💙 🌈 ✨ 💪 🫂 🌸 etc.)
+- Don't overuse emojis - 1-2 per message maximum
+- Use emojis that match the emotional tone (supportive, caring, encouraging)
 
 WHAT YOU REMEMBER:`;
 
@@ -705,6 +711,31 @@ WHAT YOU REMEMBER:`;
         if (occupation) systemPrompt += `\n- Occupation: ${occupation}`;
         if (struggles.length > 0) systemPrompt += `\n- Current struggles: ${struggles.join(', ')}`;
         if (goals.length > 0) systemPrompt += `\n- Goals: ${goals.join(', ')}`;
+
+        // Add specialized support modes
+        if (preferences.religious_spiritual_support) {
+          systemPrompt += `\n\nSPECIALIZED SUPPORT - Religious/Spiritual:
+- You can reference faith, prayer, meditation, and spirituality when appropriate
+- Be respectful of all faith traditions
+- Offer spiritual encouragement alongside emotional support
+- Suggest prayer, meditation, or faith-based coping when relevant`;
+        }
+
+        if (preferences.veteran_support) {
+          systemPrompt += `\n\nSPECIALIZED SUPPORT - Veterans:
+- Understand military culture, terminology, and experiences
+- Be aware of PTSD, TBI, and service-related trauma
+- Honor their service while focusing on their current well-being
+- Connect military values (honor, duty, resilience) to wellness journey`;
+        }
+
+        if (preferences.lgbtq_support) {
+          systemPrompt += `\n\nSPECIALIZED SUPPORT - LGBTQ+:
+- Be affirming and supportive of all identities and orientations
+- Understand unique challenges like coming out, discrimination, family acceptance
+- Use inclusive language and respect chosen names/pronouns
+- Validate their experiences and celebrate their authentic self`;
+        }
 
         if (state && !state.onboarding_completed) {
           if (state.current_stage === 'greeting') {
@@ -811,6 +842,9 @@ RESPONSE STYLE:
 - Be direct and honest, not overly formal
 - Vary your sentence structure and word choice
 - Sound like a trusted friend, not a therapist or chatbot
+- Use emojis occasionally to express emotion (😊 🌟 💙 🌈 ✨ 💪 🫂 🌸 etc.)
+- Don't overuse emojis - 1-2 per message maximum
+- Use emojis that match the emotional tone (supportive, caring, encouraging)
 
 WHAT YOU REMEMBER:`;
 
@@ -818,6 +852,31 @@ WHAT YOU REMEMBER:`;
         if (occupation) systemPrompt += `\n- Occupation: ${occupation}`;
         if (struggles.length > 0) systemPrompt += `\n- Current struggles: ${struggles.join(', ')}`;
         if (goals.length > 0) systemPrompt += `\n- Goals: ${goals.join(', ')}`;
+
+        // Add specialized support modes
+        if (preferences.religious_spiritual_support) {
+          systemPrompt += `\n\nSPECIALIZED SUPPORT - Religious/Spiritual:
+- You can reference faith, prayer, meditation, and spirituality when appropriate
+- Be respectful of all faith traditions
+- Offer spiritual encouragement alongside emotional support
+- Suggest prayer, meditation, or faith-based coping when relevant`;
+        }
+
+        if (preferences.veteran_support) {
+          systemPrompt += `\n\nSPECIALIZED SUPPORT - Veterans:
+- Understand military culture, terminology, and experiences
+- Be aware of PTSD, TBI, and service-related trauma
+- Honor their service while focusing on their current well-being
+- Connect military values (honor, duty, resilience) to wellness journey`;
+        }
+
+        if (preferences.lgbtq_support) {
+          systemPrompt += `\n\nSPECIALIZED SUPPORT - LGBTQ+:
+- Be affirming and supportive of all identities and orientations
+- Understand unique challenges like coming out, discrimination, family acceptance
+- Use inclusive language and respect chosen names/pronouns
+- Validate their experiences and celebrate their authentic self`;
+        }
 
         if (state && !state.onboarding_completed) {
           if (state.current_stage === 'greeting') {
