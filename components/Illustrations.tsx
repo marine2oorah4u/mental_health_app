@@ -9,18 +9,18 @@ export function LeafDecoration({ size = 60, color = '#10B981', style }: any) {
         <Path
           d="M50 10 Q80 30 85 60 Q85 80 70 90 Q60 85 50 95 Q50 60 50 10"
           fill={color}
-          opacity={0.3}
+          opacity={0.7}
         />
         <Path
           d="M50 10 Q20 30 15 60 Q15 80 30 90 Q40 85 50 95"
           fill={color}
-          opacity={0.2}
+          opacity={0.6}
         />
         <Path
           d="M50 20 L50 85"
           stroke={color}
-          strokeWidth="2"
-          opacity={0.4}
+          strokeWidth="3"
+          opacity={0.8}
         />
       </Svg>
     </View>
@@ -34,9 +34,9 @@ export function SparkleDecoration({ size = 40, color = '#FCD34D', style }: any) 
         <Path
           d="M50 10 L55 45 L90 50 L55 55 L50 90 L45 55 L10 50 L45 45 Z"
           fill={color}
-          opacity={0.6}
+          opacity={0.8}
         />
-        <Circle cx="50" cy="50" r="8" fill={color} opacity={0.8} />
+        <Circle cx="50" cy="50" r="10" fill={color} opacity={0.9} />
       </Svg>
     </View>
   );
@@ -106,30 +106,35 @@ export function BrainIllustration({ size = 200, isDark = false }: any) {
 
 export function FloatingCircles({ isDark = false }: any) {
   return (
-    <View style={StyleSheet.absoluteFill}>
-      <View style={{ position: 'absolute', top: 100, left: 30 }}>
-        <Svg width={20} height={20} viewBox="0 0 20 20">
-          <Circle cx="10" cy="10" r="8" fill={isDark ? '#60A5FA' : '#93C5FD'} opacity={0.4} />
+    <View style={StyleSheet.absoluteFill} pointerEvents="none">
+      <View style={{ position: 'absolute', top: 200, left: 20 }}>
+        <Svg width={40} height={40} viewBox="0 0 40 40">
+          <Circle cx="20" cy="20" r="18" fill="#60A5FA" opacity={0.5} />
         </Svg>
       </View>
-      <View style={{ position: 'absolute', top: 150, right: 50 }}>
-        <Svg width={15} height={15} viewBox="0 0 15 15">
-          <Circle cx="7.5" cy="7.5" r="6" fill={isDark ? '#34D399' : '#6EE7B7'} opacity={0.4} />
+      <View style={{ position: 'absolute', top: 270, right: 30 }}>
+        <Svg width={35} height={35} viewBox="0 0 35 35">
+          <Circle cx="17.5" cy="17.5" r="15" fill="#34D399" opacity={0.5} />
         </Svg>
       </View>
-      <View style={{ position: 'absolute', top: 180, left: 80 }}>
-        <Svg width={12} height={12} viewBox="0 0 12 12">
-          <Circle cx="6" cy="6" r="5" fill={isDark ? '#F472B6' : '#F9A8D4'} opacity={0.4} />
+      <View style={{ position: 'absolute', top: 400, left: 60 }}>
+        <Svg width={30} height={30} viewBox="0 0 30 30">
+          <Circle cx="15" cy="15" r="13" fill="#F472B6" opacity={0.4} />
         </Svg>
       </View>
-      <View style={{ position: 'absolute', bottom: 250, right: 40 }}>
-        <Svg width={18} height={18} viewBox="0 0 18 18">
-          <Circle cx="9" cy="9" r="7" fill={isDark ? '#FCD34D' : '#FDE68A'} opacity={0.3} />
+      <View style={{ position: 'absolute', bottom: 220, right: 50 }}>
+        <Svg width={45} height={45} viewBox="0 0 45 45">
+          <Circle cx="22.5" cy="22.5" r="20" fill="#FCD34D" opacity={0.4} />
         </Svg>
       </View>
-      <View style={{ position: 'absolute', top: 200, right: 100 }}>
-        <Svg width={10} height={10} viewBox="0 0 10 10">
-          <Circle cx="5" cy="5" r="4" fill={isDark ? '#818CF8' : '#A5B4FC'} opacity={0.4} />
+      <View style={{ position: 'absolute', top: 500, right: 80 }}>
+        <Svg width={25} height={25} viewBox="0 0 25 25">
+          <Circle cx="12.5" cy="12.5" r="11" fill="#818CF8" opacity={0.5} />
+        </Svg>
+      </View>
+      <View style={{ position: 'absolute', bottom: 350, left: 40 }}>
+        <Svg width={35} height={35} viewBox="0 0 35 35">
+          <Circle cx="17.5" cy="17.5" r="15" fill="#FB923C" opacity={0.4} />
         </Svg>
       </View>
     </View>
