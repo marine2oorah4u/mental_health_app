@@ -92,7 +92,7 @@ export default function HomeScreen() {
       fontWeight: '400',
     },
     companionCard: {
-      marginTop: -80,
+      marginTop: -30,
       marginHorizontal: 24,
       backgroundColor: theme.surface,
       borderRadius: 28,
