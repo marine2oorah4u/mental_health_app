@@ -169,6 +169,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [fontSize, setFontSizeState] = useState<FontSize>('medium');
   const [customTheme, setCustomThemeState] = useState<ThemeColors | null>(null);
 
+  console.log('ThemeProvider render - themeName:', themeName);
+
   useEffect(() => {
     loadPreferences();
   }, []);
@@ -212,7 +214,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const setTheme = async (name: ThemeName) => {
+    console.log('setTheme called with:', name);
+    console.log('Before setState, themeName is:', themeName);
     setThemeNameState(name);
+    console.log('After setState called');
     await AsyncStorage.setItem('theme', name);
 
     const { data: { user } } = await supabase.auth.getUser();

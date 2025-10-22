@@ -184,7 +184,10 @@ export default function ProfileScreen() {
                       { backgroundColor: themeColors.primary },
                       themeName === key && styles.themeButtonActive,
                     ]}
-                    onPress={() => setTheme(themeKey)}
+                    onPress={() => {
+                      console.log('Clicking theme:', themeKey, 'Current:', themeName);
+                      setTheme(themeKey);
+                    }}
                   />
                 );
               })}
