@@ -41,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="companion"
         options={{
-          title: 'Companion',
+          title: 'Chat',
           tabBarIcon: ({ size, color }) => (
             <MessageCircle size={size} color={color} />
           ),
@@ -50,7 +50,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="community"
         options={{
-          title: 'Community',
+          title: 'People',
           tabBarIcon: ({ size, color }) => (
             <Users size={size} color={color} />
           ),
@@ -145,6 +145,24 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="admin"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="companion-environment"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="companion-appearance"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="voice-settings"
         options={{
           href: null,
         }}
