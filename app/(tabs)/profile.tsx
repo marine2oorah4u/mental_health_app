@@ -190,6 +190,7 @@ export default function ProfileScreen() {
                   <TouchableOpacity
                     key={key}
                     activeOpacity={0.7}
+                    pointerEvents="auto"
                     style={[
                       styles.themeButton,
                       { backgroundColor: themeColors.primary },
@@ -200,7 +201,9 @@ export default function ProfileScreen() {
                       alert(`Clicked ${themeKey}`);
                       setTheme(themeKey);
                     }}
-                  />
+                  >
+                    <View style={{ width: '100%', height: '100%' }} />
+                  </TouchableOpacity>
                 );
               })}
               <TouchableOpacity
