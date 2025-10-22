@@ -13,6 +13,10 @@ export default function ProfileScreen() {
   const [tapCount, setTapCount] = useState(0);
   const [lastTapTime, setLastTapTime] = useState(0);
 
+  useEffect(() => {
+    console.log('ProfileScreen re-rendered with theme:', themeName, 'primary:', theme.primary);
+  }, [themeName, theme]);
+
   const handleSignOut = async () => {
     await signOut();
     router.replace('/(auth)/welcome');
