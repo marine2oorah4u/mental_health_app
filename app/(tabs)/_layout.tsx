@@ -193,6 +193,12 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="custom-theme"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

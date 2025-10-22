@@ -189,9 +189,9 @@ export default function ProfileScreen() {
               })}
               <TouchableOpacity
                 style={styles.customThemeButton}
-                onPress={() => router.push('/(tabs)/theme-builder')}
+                onPress={() => router.push('/(tabs)/custom-theme')}
               >
-                <Plus size={32} color="#FFFFFF" />
+                <Palette size={28} color="#FFFFFF" />
               </TouchableOpacity>
             </View>
           </View>
