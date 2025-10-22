@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '@/lib/supabase';
 
@@ -260,20 +260,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const currentTheme = themeName === 'custom' && customTheme ? customTheme : THEMES[themeName as ThemeName] || THEMES.forest_peace;
+  const currentTheme = useMemo(() => {
+    const theme = themeName === 'custom' && customTheme ? customTheme : THEMES[themeName as ThemeName] || THEMES.forest_peace;
+    console.log('Computing currentTheme for:', themeName, theme.primary);
+    return theme;
+  }, [themeName, customTheme]);
+
+  const contextValue = useMemo(() => ({
+    themeName,
+    theme: currentTheme,
+    fontSize,
+    customTheme,
+    setTheme,
+    setCustomTheme,
+    setFontSize,
+  }), [themeName, currentTheme, fontSize, customTheme]);
 
   return (
-    <ThemeContext.Provider
-      value={{
-        themeName,
-        theme: currentTheme,
-        fontSize,
-        customTheme,
-        setTheme,
-        setCustomTheme,
-        setFontSize,
-      }}
-    >
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
