@@ -23,8 +23,11 @@ import {
   AlertTriangle,
   TrendingUp,
   Calendar,
+  Flame,
+  CheckCircle2,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import AnimalCompanion from '@/components/AnimalCompanion';
 
 const { width } = Dimensions.get('window');
@@ -73,177 +76,234 @@ export default function HomeScreen() {
     },
     headerGradient: {
       paddingTop: 20,
-      paddingHorizontal: 20,
-      paddingBottom: 30,
+      paddingHorizontal: 24,
+      paddingBottom: 120,
     },
     greeting: {
-      fontSize: getFontSize(fontSize, 'title'),
-      fontWeight: 'bold',
+      fontSize: getFontSize(fontSize, 'xlarge'),
+      fontWeight: '700',
       color: '#FFFFFF',
-      marginBottom: 4,
+      marginBottom: 6,
     },
     subtitle: {
       fontSize: getFontSize(fontSize, 'body'),
       color: '#FFFFFF',
-      opacity: 0.9,
+      opacity: 0.85,
+      fontWeight: '400',
     },
     companionCard: {
-      marginTop: 20,
-      marginHorizontal: 20,
+      marginTop: -80,
+      marginHorizontal: 24,
       backgroundColor: theme.surface,
-      borderRadius: 24,
-      padding: 24,
+      borderRadius: 28,
+      padding: 28,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.15,
-      shadowRadius: 16,
-      elevation: 8,
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: 0.1,
+      shadowRadius: 24,
+      elevation: 12,
       alignItems: 'center',
     },
     companionContainer: {
-      width: 120,
-      height: 120,
-      marginBottom: 16,
+      width: 140,
+      height: 140,
+      marginBottom: 20,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: `${theme.primary}10`,
+      borderRadius: 70,
     },
     companionName: {
-      fontSize: getFontSize(fontSize, 'heading'),
-      fontWeight: 'bold',
+      fontSize: getFontSize(fontSize, 'xlarge'),
+      fontWeight: '700',
       color: theme.text,
-      marginBottom: 8,
+      marginBottom: 12,
     },
     companionMessage: {
       fontSize: getFontSize(fontSize, 'body'),
       color: theme.textSecondary,
       textAlign: 'center',
-      marginBottom: 20,
-      lineHeight: 22,
+      marginBottom: 24,
+      lineHeight: 24,
+      paddingHorizontal: 8,
     },
     chatButton: {
       backgroundColor: theme.primary,
-      borderRadius: 16,
-      paddingVertical: 14,
-      paddingHorizontal: 32,
+      borderRadius: 20,
+      paddingVertical: 16,
+      paddingHorizontal: 36,
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 8,
+      gap: 10,
+      shadowColor: theme.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 4,
     },
     chatButtonText: {
       color: '#FFFFFF',
       fontSize: getFontSize(fontSize, 'body'),
-      fontWeight: '600',
+      fontWeight: '700',
     },
     content: {
-      padding: 20,
+      padding: 24,
     },
     emergencyBanner: {
       backgroundColor: '#DC2626',
-      borderRadius: 16,
-      padding: 16,
+      borderRadius: 20,
+      padding: 18,
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: 24,
+      marginBottom: 28,
+      shadowColor: '#DC2626',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.2,
+      shadowRadius: 8,
+      elevation: 4,
     },
     emergencyText: {
       color: '#FFFFFF',
       fontSize: getFontSize(fontSize, 'body'),
-      fontWeight: 'bold',
+      fontWeight: '700',
       marginLeft: 12,
       flex: 1,
     },
     sectionTitle: {
-      fontSize: getFontSize(fontSize, 'heading'),
-      fontWeight: 'bold',
+      fontSize: getFontSize(fontSize, 'large'),
+      fontWeight: '700',
       color: theme.text,
       marginBottom: 16,
-      marginTop: 8,
+      marginTop: 4,
     },
     statsRow: {
       flexDirection: 'row',
-      gap: 12,
-      marginBottom: 24,
+      gap: 16,
+      marginBottom: 28,
     },
     statCard: {
       flex: 1,
       backgroundColor: theme.surface,
-      borderRadius: 16,
-      padding: 16,
+      borderRadius: 20,
+      padding: 20,
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 8,
+      elevation: 2,
+    },
+    statIconContainer: {
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 12,
     },
     statValue: {
       fontSize: getFontSize(fontSize, 'xxlarge'),
-      fontWeight: 'bold',
-      color: theme.primary,
-      marginTop: 8,
-      marginBottom: 4,
+      fontWeight: '800',
+      color: theme.text,
+      marginBottom: 6,
     },
     statLabel: {
       fontSize: getFontSize(fontSize, 'small'),
       color: theme.textSecondary,
       textAlign: 'center',
+      fontWeight: '600',
     },
     actionGrid: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      gap: 12,
-      marginBottom: 24,
+      gap: 16,
+      marginBottom: 28,
     },
     actionCard: {
-      width: (width - 52) / 2,
+      width: (width - 64) / 2,
       backgroundColor: theme.surface,
-      borderRadius: 16,
-      padding: 20,
+      borderRadius: 20,
+      padding: 24,
       alignItems: 'center',
-      minHeight: 120,
+      minHeight: 140,
       justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 8,
+      elevation: 2,
     },
-    actionIcon: {
-      marginBottom: 12,
+    actionIconContainer: {
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 14,
     },
     actionLabel: {
       fontSize: getFontSize(fontSize, 'body'),
       color: theme.text,
-      fontWeight: '600',
+      fontWeight: '700',
       textAlign: 'center',
+      marginBottom: 4,
     },
     actionSubtext: {
       fontSize: getFontSize(fontSize, 'small'),
       color: theme.textSecondary,
-      marginTop: 4,
+      marginTop: 2,
       textAlign: 'center',
+      fontWeight: '500',
     },
     communityPreview: {
-      backgroundColor: `${theme.secondary}15`,
-      borderRadius: 16,
-      padding: 20,
+      backgroundColor: theme.surface,
+      borderRadius: 20,
+      padding: 24,
       marginBottom: 24,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 8,
+      elevation: 2,
+    },
+    communityIconContainer: {
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 16,
     },
     communityTitle: {
-      fontSize: getFontSize(fontSize, 'heading'),
-      fontWeight: 'bold',
+      fontSize: getFontSize(fontSize, 'large'),
+      fontWeight: '700',
       color: theme.text,
-      marginBottom: 8,
+      marginBottom: 10,
     },
     communityText: {
       fontSize: getFontSize(fontSize, 'body'),
       color: theme.textSecondary,
-      lineHeight: 22,
-      marginBottom: 16,
+      lineHeight: 24,
+      marginBottom: 20,
     },
     communityButton: {
       backgroundColor: theme.secondary,
-      borderRadius: 12,
-      padding: 14,
+      borderRadius: 16,
+      padding: 16,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: 8,
+      gap: 10,
+      shadowColor: theme.secondary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.2,
+      shadowRadius: 8,
+      elevation: 3,
     },
     communityButtonText: {
       color: '#FFFFFF',
       fontSize: getFontSize(fontSize, 'body'),
-      fontWeight: '600',
+      fontWeight: '700',
     },
   });
 
@@ -310,7 +370,14 @@ export default function HomeScreen() {
               style={styles.statCard}
               onPress={() => router.push('/(tabs)/daily-checkin')}
             >
-              <Calendar size={24} color={theme.primary} />
+              <View
+                style={[
+                  styles.statIconContainer,
+                  { backgroundColor: '#FF6B3520' },
+                ]}
+              >
+                <Flame size={26} color="#FF6B35" strokeWidth={2.5} />
+              </View>
               <Text style={styles.statValue}>{currentStreak}</Text>
               <Text style={styles.statLabel}>Day Streak</Text>
             </TouchableOpacity>
@@ -319,7 +386,14 @@ export default function HomeScreen() {
               style={styles.statCard}
               onPress={() => router.push('/(tabs)/mood-tracker')}
             >
-              <TrendingUp size={24} color={theme.secondary} />
+              <View
+                style={[
+                  styles.statIconContainer,
+                  { backgroundColor: '#10B98120' },
+                ]}
+              >
+                <CheckCircle2 size={26} color="#10B981" strokeWidth={2.5} />
+              </View>
               <Text style={styles.statValue}>{todayCheckedIn ? '✓' : '–'}</Text>
               <Text style={styles.statLabel}>Today's Check-in</Text>
             </TouchableOpacity>
@@ -331,7 +405,14 @@ export default function HomeScreen() {
               style={styles.actionCard}
               onPress={() => router.push('/(tabs)/breathing')}
             >
-              <Wind size={32} color={theme.primary} style={styles.actionIcon} />
+              <View
+                style={[
+                  styles.actionIconContainer,
+                  { backgroundColor: '#3B82F615' },
+                ]}
+              >
+                <Wind size={28} color="#3B82F6" strokeWidth={2.5} />
+              </View>
               <Text style={styles.actionLabel}>Breathe</Text>
               <Text style={styles.actionSubtext}>Calm your mind</Text>
             </TouchableOpacity>
@@ -340,16 +421,30 @@ export default function HomeScreen() {
               style={styles.actionCard}
               onPress={() => router.push('/(tabs)/daily-inspiration')}
             >
-              <Sparkles size={32} color="#EC4899" style={styles.actionIcon} />
+              <View
+                style={[
+                  styles.actionIconContainer,
+                  { backgroundColor: '#EC489915' },
+                ]}
+              >
+                <Sparkles size={28} color="#EC4899" strokeWidth={2.5} />
+              </View>
               <Text style={styles.actionLabel}>Inspiration</Text>
-              <Text style={styles.actionSubtext}>Daily prayers & verses</Text>
+              <Text style={styles.actionSubtext}>Daily prayers</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.actionCard}
               onPress={() => router.push('/(tabs)/journal')}
             >
-              <BookOpen size={32} color="#10B981" style={styles.actionIcon} />
+              <View
+                style={[
+                  styles.actionIconContainer,
+                  { backgroundColor: '#10B98115' },
+                ]}
+              >
+                <BookOpen size={28} color="#10B981" strokeWidth={2.5} />
+              </View>
               <Text style={styles.actionLabel}>Journal</Text>
               <Text style={styles.actionSubtext}>Express yourself</Text>
             </TouchableOpacity>
@@ -358,14 +453,28 @@ export default function HomeScreen() {
               style={styles.actionCard}
               onPress={() => router.push('/(tabs)/mood-tracker')}
             >
-              <Heart size={32} color={theme.accent} style={styles.actionIcon} />
+              <View
+                style={[
+                  styles.actionIconContainer,
+                  { backgroundColor: '#F59E0B15' },
+                ]}
+              >
+                <Heart size={28} color="#F59E0B" strokeWidth={2.5} />
+              </View>
               <Text style={styles.actionLabel}>Mood</Text>
               <Text style={styles.actionSubtext}>Track feelings</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.communityPreview}>
-            <Users size={28} color={theme.secondary} />
+            <View
+              style={[
+                styles.communityIconContainer,
+                { backgroundColor: `${theme.secondary}20` },
+              ]}
+            >
+              <Users size={24} color={theme.secondary} strokeWidth={2.5} />
+            </View>
             <Text style={styles.communityTitle}>Join the Community</Text>
             <Text style={styles.communityText}>
               Connect with others, share your progress, and celebrate wins
@@ -375,7 +484,7 @@ export default function HomeScreen() {
               style={styles.communityButton}
               onPress={() => router.push('/(tabs)/community')}
             >
-              <Users size={20} color="#FFFFFF" />
+              <Users size={22} color="#FFFFFF" strokeWidth={2.5} />
               <Text style={styles.communityButtonText}>Explore Community</Text>
             </TouchableOpacity>
           </View>
