@@ -15,19 +15,17 @@ export default function TabLayout() {
           backgroundColor: theme.surface,
           borderTopColor: theme.border,
           borderTopWidth: 1,
-          height: 88,
-          paddingBottom: 32,
-          paddingTop: 10,
+          height: 85,
+          paddingBottom: 20,
+          paddingTop: 8,
         },
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: '600',
-          marginTop: 2,
-          marginBottom: 0,
+          marginTop: 4,
         },
         tabBarIconStyle: {
-          marginTop: 8,
-          marginBottom: 0,
+          marginTop: 4,
         },
       }}
     >

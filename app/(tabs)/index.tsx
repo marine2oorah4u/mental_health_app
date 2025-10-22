@@ -72,7 +72,7 @@ export default function HomeScreen() {
     headerGradient: {
       paddingTop: 60,
       paddingHorizontal: 20,
-      paddingBottom: 100,
+      paddingBottom: 80,
     },
     greeting: {
       fontSize: getFontSize(fontSize, 'title'),
@@ -86,7 +86,7 @@ export default function HomeScreen() {
       opacity: 0.9,
     },
     companionCard: {
-      marginTop: -60,
+      marginTop: -40,
       marginHorizontal: 20,
       backgroundColor: theme.surface,
       borderRadius: 24,
