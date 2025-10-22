@@ -183,6 +183,7 @@ export default function ProfileScreen() {
                 return (
                   <TouchableOpacity
                     key={key}
+                    activeOpacity={0.7}
                     style={[
                       styles.themeButton,
                       { backgroundColor: themeColors.primary },
@@ -190,6 +191,7 @@ export default function ProfileScreen() {
                     ]}
                     onPress={() => {
                       console.log('Clicking theme:', themeKey, 'Current:', themeName);
+                      alert(`Clicked ${themeKey}`);
                       setTheme(themeKey);
                     }}
                   />
