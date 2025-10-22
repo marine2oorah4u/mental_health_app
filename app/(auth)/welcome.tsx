@@ -1,43 +1,78 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Brain, Sparkles, Heart, Leaf } from 'lucide-react-native';
+import { useTheme } from '@/contexts/ThemeContext';
 import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const isDark = theme.text === '#FFFFFF';
 
   return (
-    <LinearGradient
-      colors={['#F0F9FF', '#E0F2FE', '#F0FDFA']}
-      style={styles.container}
-    >
+    <View style={[styles.container, { backgroundColor: isDark ? '#1a1a1a' : '#f5f0e8' }]}>
       <View style={styles.decorativeElements}>
         <Animated.View
           entering={FadeIn.duration(1000).delay(200)}
           style={[styles.leaf, styles.leafTopLeft]}
         >
-          <Leaf size={40} color="#10B981" opacity={0.3} />
+          <Text style={styles.leafEmoji}>🌿</Text>
         </Animated.View>
         <Animated.View
           entering={FadeIn.duration(1000).delay(400)}
           style={[styles.leaf, styles.leafTopRight]}
         >
-          <Leaf size={32} color="#34D399" opacity={0.3} />
+          <Text style={[styles.leafEmoji, { fontSize: 32 }]}>🌿</Text>
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(300)}
+          style={[styles.sparkle, { top: 120, left: 50 }]}
+        >
+          <Text style={styles.sparkleText}>✨</Text>
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(500)}
+          style={[styles.sparkle, { top: 160, right: 60 }]}
+        >
+          <Text style={styles.sparkleText}>⚙️</Text>
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(700)}
+          style={[styles.sparkle, { bottom: 250, left: 80 }]}
+        >
+          <Text style={[styles.sparkleText, { fontSize: 12 }]}>✨</Text>
         </Animated.View>
         <Animated.View
           entering={FadeIn.duration(1000).delay(600)}
-          style={[styles.sparkle, styles.sparkleTop]}
+          style={[styles.sparkle, { top: 200, left: 30 }]}
         >
-          <Sparkles size={20} color="#FCD34D" opacity={0.5} />
+          <View style={[styles.dot, { backgroundColor: isDark ? '#60A5FA' : '#93C5FD' }]} />
         </Animated.View>
         <Animated.View
           entering={FadeIn.duration(1000).delay(800)}
-          style={[styles.sparkle, styles.sparkleBottom]}
+          style={[styles.sparkle, { top: 140, right: 100 }]}
         >
-          <Sparkles size={16} color="#FCD34D" opacity={0.5} />
+          <View style={[styles.dot, { backgroundColor: isDark ? '#34D399' : '#6EE7B7' }]} />
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(900)}
+          style={[styles.sparkle, { bottom: 280, right: 50 }]}
+        >
+          <View style={[styles.dot, { backgroundColor: isDark ? '#F472B6' : '#F9A8D4' }]} />
+        </Animated.View>
+
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(400)}
+          style={[styles.leafBottom, styles.leafBottomLeft]}
+        >
+          <Text style={[styles.leafEmoji, { fontSize: 60 }]}>🌿</Text>
+        </Animated.View>
+        <Animated.View
+          entering={FadeIn.duration(1000).delay(600)}
+          style={[styles.leafBottom, styles.leafBottomRight]}
+        >
+          <Text style={[styles.leafEmoji, { fontSize: 50 }]}>🌿</Text>
         </Animated.View>
       </View>
 
@@ -48,12 +83,14 @@ export default function WelcomeScreen() {
         >
           <View style={styles.brainWrapper}>
             <View style={styles.lightBulb}>
-              <View style={styles.lightBulbGlow} />
+              <View style={[styles.lightBulbGlow, { opacity: isDark ? 0.3 : 0.5 }]} />
               <Text style={styles.lightBulbEmoji}>💡</Text>
             </View>
             <View style={styles.brainContainer}>
-              <Brain size={120} color="#EC4899" strokeWidth={1.5} />
-              <View style={styles.brainAccent} />
+              <Text style={styles.brainEmoji}>🧠</Text>
+            </View>
+            <View style={styles.gearTop}>
+              <Text style={styles.gearEmoji}>⚙️</Text>
             </View>
           </View>
         </Animated.View>
@@ -62,8 +99,10 @@ export default function WelcomeScreen() {
           entering={FadeInDown.duration(800).delay(500)}
           style={styles.textContainer}
         >
-          <Text style={styles.title}>Take Care Of Your Mind.</Text>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.title, { color: isDark ? '#FFFFFF' : '#1a1a1a' }]}>
+            Take Care Of Your Mind.
+          </Text>
+          <Text style={[styles.subtitle, { color: isDark ? '#D1D5DB' : '#6B7280' }]}>
             Are you feeling overwhelmed by anxiety and stress?{'\n'}
             Our app will help you find calm and balance in your{'\n'}
             day to day life.
@@ -78,30 +117,22 @@ export default function WelcomeScreen() {
             style={styles.primaryButton}
             onPress={() => router.push('/(auth)/sign-up')}
           >
-            <LinearGradient
-              colors={['#F97316', '#FB923C']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.buttonGradient}
-            >
-              <Text style={styles.primaryButtonText}>Start Now →</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => router.push('/(auth)/sign-in')}
-          >
-            <Text style={styles.linkText}>Already have an account? Log in</Text>
+            <Text style={styles.primaryButtonText}>Start Now  →</Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
 
-      <View style={styles.footer}>
-        <View style={styles.dot} />
-        <View style={[styles.dot, styles.dotActive]} />
-        <View style={styles.dot} />
-      </View>
-    </LinearGradient>
+      <Animated.View
+        entering={FadeInDown.duration(800).delay(900)}
+        style={styles.footer}
+      >
+        <TouchableOpacity onPress={() => router.push('/(auth)/sign-in')}>
+          <Text style={[styles.linkText, { color: isDark ? '#D1D5DB' : '#6B7280' }]}>
+            Already have an account? Log in
+          </Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
   );
 }
 
@@ -120,142 +151,140 @@ const styles = StyleSheet.create({
   leafTopLeft: {
     top: 60,
     left: 30,
-    transform: [{ rotate: '-15deg' }],
+    transform: [{ rotate: '-25deg' }],
   },
   leafTopRight: {
     top: 100,
-    right: 40,
-    transform: [{ rotate: '25deg' }],
+    right: 30,
+    transform: [{ rotate: '35deg' }],
+  },
+  leafBottom: {
+    position: 'absolute',
+  },
+  leafBottomLeft: {
+    bottom: 0,
+    left: -10,
+    transform: [{ rotate: '15deg' }],
+  },
+  leafBottomRight: {
+    bottom: 0,
+    right: -5,
+    transform: [{ rotate: '-15deg' }],
+  },
+  leafEmoji: {
+    fontSize: 40,
+    opacity: 0.6,
   },
   sparkle: {
     position: 'absolute',
   },
-  sparkleTop: {
-    top: 140,
-    right: 80,
+  sparkleText: {
+    fontSize: 16,
+    opacity: 0.6,
   },
-  sparkleBottom: {
-    bottom: 200,
-    left: 60,
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    opacity: 0.6,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 32,
-    paddingTop: 60,
+    paddingTop: 40,
   },
   illustrationContainer: {
-    marginBottom: 40,
+    marginBottom: 50,
     alignItems: 'center',
   },
   brainWrapper: {
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 220,
   },
   lightBulb: {
     position: 'absolute',
-    top: -20,
-    right: -10,
+    top: -10,
+    left: -20,
     zIndex: 10,
   },
   lightBulbGlow: {
     position: 'absolute',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     backgroundColor: '#FEF3C7',
-    opacity: 0.6,
     top: -10,
     left: -10,
   },
   lightBulbEmoji: {
-    fontSize: 40,
+    fontSize: 50,
   },
   brainContainer: {
-    position: 'relative',
-    padding: 30,
-    backgroundColor: '#FCE7F3',
-    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  brainAccent: {
+  brainEmoji: {
+    fontSize: 140,
+  },
+  gearTop: {
     position: 'absolute',
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    borderWidth: 2,
-    borderColor: '#FBCFE8',
-    borderStyle: 'dashed',
     top: -5,
-    left: -5,
-    opacity: 0.5,
+    right: -15,
+    zIndex: 5,
+  },
+  gearEmoji: {
+    fontSize: 35,
+    opacity: 0.7,
   },
   textContainer: {
     alignItems: 'center',
-    marginBottom: 60,
+    marginBottom: 50,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#1F2937',
     textAlign: 'center',
     marginBottom: 16,
     letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 15,
-    color: '#6B7280',
     textAlign: 'center',
     lineHeight: 24,
-    paddingHorizontal: 8,
   },
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
-    gap: 16,
   },
   primaryButton: {
     width: '100%',
+    backgroundColor: '#F97316',
+    paddingVertical: 18,
+    paddingHorizontal: 32,
     borderRadius: 50,
-    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: '#F97316',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.3,
     shadowRadius: 16,
     elevation: 8,
   },
-  buttonGradient: {
-    paddingVertical: 18,
-    paddingHorizontal: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   primaryButtonText: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontWeight: 'bold',
-  },
-  linkText: {
-    color: '#6B7280',
-    fontSize: 14,
-    textDecorationLine: 'underline',
+    fontWeight: '600',
   },
   footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    paddingBottom: 50,
     alignItems: 'center',
-    paddingBottom: 40,
-    gap: 8,
   },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#D1D5DB',
-  },
-  dotActive: {
-    width: 24,
-    backgroundColor: '#F97316',
+  linkText: {
+    fontSize: 14,
   },
 });
