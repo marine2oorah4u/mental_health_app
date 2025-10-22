@@ -229,8 +229,8 @@ export default function CustomThemeScreen() {
               Primary Color
             </Text>
             <SimpleColorPicker
-              color={customColors.primary}
-              onColorChange={(color) => updateColor('primary', color)}
+              selectedColor={customColors.primary}
+              onSelectColor={(color) => updateColor('primary', color)}
             />
           </View>
 
@@ -239,8 +239,8 @@ export default function CustomThemeScreen() {
               Secondary Color
             </Text>
             <SimpleColorPicker
-              color={customColors.secondary}
-              onColorChange={(color) => updateColor('secondary', color)}
+              selectedColor={customColors.secondary}
+              onSelectColor={(color) => updateColor('secondary', color)}
             />
           </View>
 
@@ -249,8 +249,8 @@ export default function CustomThemeScreen() {
               Accent Color
             </Text>
             <SimpleColorPicker
-              color={customColors.accent}
-              onColorChange={(color) => updateColor('accent', color)}
+              selectedColor={customColors.accent}
+              onSelectColor={(color) => updateColor('accent', color)}
             />
           </View>
 
@@ -259,8 +259,8 @@ export default function CustomThemeScreen() {
               Background Color
             </Text>
             <SimpleColorPicker
-              color={customColors.background}
-              onColorChange={(color) => updateColor('background', color)}
+              selectedColor={customColors.background}
+              onSelectColor={(color) => updateColor('background', color)}
             />
           </View>
 
@@ -269,8 +269,8 @@ export default function CustomThemeScreen() {
               Surface Color
             </Text>
             <SimpleColorPicker
-              color={customColors.surface}
-              onColorChange={(color) => updateColor('surface', color)}
+              selectedColor={customColors.surface}
+              onSelectColor={(color) => updateColor('surface', color)}
             />
           </View>
 
@@ -279,8 +279,8 @@ export default function CustomThemeScreen() {
               Text Color
             </Text>
             <SimpleColorPicker
-              color={customColors.text}
-              onColorChange={(color) => updateColor('text', color)}
+              selectedColor={customColors.text}
+              onSelectColor={(color) => updateColor('text', color)}
             />
           </View>
         </Animated.View>
