@@ -381,10 +381,6 @@ export default function CompanionScreen() {
         setIsTyping(false);
         setIsSending(false);
         setTimeout(() => setCompanionEmotion('idle'), 3000);
-
-        if (voiceSettings.enabled && voiceSettings.autoSpeak) {
-          await speakResponse(response);
-        }
       }, 800);
     } catch (error) {
       console.error('AI response error:', error);

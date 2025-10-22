@@ -48,7 +48,7 @@ export default function HomeScreen() {
       .from('daily_check_ins')
       .select('id')
       .eq('user_id', user.id)
-      .gte('created_at', today)
+      .eq('check_in_date', today)
       .maybeSingle();
 
     setTodayCheckedIn(!!checkIn);
@@ -72,7 +72,7 @@ export default function HomeScreen() {
     headerGradient: {
       paddingTop: 60,
       paddingHorizontal: 20,
-      paddingBottom: 120,
+      paddingBottom: 100,
     },
     greeting: {
       fontSize: getFontSize(fontSize, 'title'),
@@ -86,7 +86,7 @@ export default function HomeScreen() {
       opacity: 0.9,
     },
     companionCard: {
-      marginTop: -80,
+      marginTop: -60,
       marginHorizontal: 20,
       backgroundColor: theme.surface,
       borderRadius: 24,
@@ -274,7 +274,10 @@ export default function HomeScreen() {
         <Text style={styles.subtitle}>Buddy is here for you</Text>
       </LinearGradient>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
         <View style={styles.companionCard}>
           <View style={styles.companionContainer}>
             <AnimalCompanion animalType="cat" emotion="happy" size={120} />

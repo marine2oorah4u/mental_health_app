@@ -205,51 +205,6 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Companion</Text>
-          <TouchableOpacity
-            style={[styles.button, { marginBottom: 12 }]}
-            onPress={() => router.push('/(tabs)/companion-settings')}
-          >
-            <Settings size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Personality Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { marginBottom: 12 }]}
-            onPress={() => router.push('/(tabs)/companion-appearance')}
-          >
-            <Palette size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Customize Appearance</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { marginBottom: 12 }]}
-            onPress={() => router.push('/(tabs)/companion-environment')}
-          >
-            <Settings size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Customize Environment</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { marginBottom: 12 }]}
-            onPress={() => router.push('/(tabs)/companion-room')}
-          >
-            <Home size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Decorate Room</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, { marginBottom: 12 }]}
-            onPress={() => router.push('/(tabs)/voice-settings')}
-          >
-            <Volume2 size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Voice Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => router.push('/(tabs)/companion-memories')}
-          >
-            <Brain size={24} color={theme.text} />
-            <Text style={styles.buttonText}>Buddy's Memories</Text>
-          </TouchableOpacity>
-        </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Progress</Text>
