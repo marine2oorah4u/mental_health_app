@@ -12,6 +12,7 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [tapCount, setTapCount] = useState(0);
   const [lastTapTime, setLastTapTime] = useState(0);
+  const [selectedTheme, setSelectedTheme] = useState<ThemeName>(themeName);
 
   useEffect(() => {
     console.log('ProfileScreen re-rendered with theme:', themeName, 'primary:', theme.primary);
@@ -100,6 +101,19 @@ export default function ProfileScreen() {
       alignItems: 'center',
       backgroundColor: theme.primary,
     },
+    applyButton: {
+      backgroundColor: theme.primary,
+      borderRadius: 12,
+      padding: 16,
+      marginTop: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    applyButtonText: {
+      fontSize: getFontSize(fontSize, 'body'),
+      color: '#FFFFFF',
+      fontWeight: '600',
+    },
     button: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -187,11 +201,11 @@ export default function ProfileScreen() {
                     style={[
                       styles.themeButton,
                       { backgroundColor: themeColors.primary },
-                      themeName === key && styles.themeButtonActive,
+                      selectedTheme === key && styles.themeButtonActive,
                     ]}
                     onPress={() => {
-                      console.log('Clicking theme:', themeKey, 'Current:', themeName);
-                      setTheme(themeKey);
+                      console.log('Selected theme:', themeKey);
+                      setSelectedTheme(themeKey);
                     }}
                   />
                 );
@@ -203,6 +217,16 @@ export default function ProfileScreen() {
                 <Palette size={28} color="#FFFFFF" />
               </TouchableOpacity>
             </View>
+
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={() => {
+                console.log('Applying theme:', selectedTheme);
+                setTheme(selectedTheme);
+              }}
+            >
+              <Text style={styles.applyButtonText}>Apply Theme</Text>
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
