@@ -15,6 +15,8 @@ import { useRouter } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import AchievementCelebration from '@/components/AchievementCelebration';
+import AnimatedReanimated, { FadeIn } from 'react-native-reanimated';
+import { FloatingCircles, BreathingCircle, LeafDecoration } from '@/components/Illustrations';
 
 const { width } = Dimensions.get('window');
 
@@ -246,10 +248,32 @@ export default function BreathingScreen() {
     }
   };
 
+  const isDark = theme.text === '#FFFFFF';
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.background,
+    },
+    decorativeElements: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      zIndex: 0,
+    },
+    leafBottomLeft: {
+      position: 'absolute',
+      bottom: 50,
+      left: 10,
+      transform: [{ rotate: '15deg' }],
+      opacity: 0.3,
+    },
+    leafBottomRight: {
+      position: 'absolute',
+      bottom: 80,
+      right: 15,
+      transform: [{ rotate: '-15deg' }],
+      opacity: 0.3,
     },
     headerGradient: {
       paddingTop: 60,
@@ -359,6 +383,22 @@ export default function BreathingScreen() {
 
   return (
     <View style={styles.container}>
+      <FloatingCircles isDark={isDark} />
+
+      <View style={styles.decorativeElements}>
+        <AnimatedReanimated entering={FadeIn.duration(1000).delay(400)} style={styles.leafBottomLeft}>
+          <LeafDecoration size={50} color={isDark ? '#10B981' : '#059669'} />
+        </AnimatedReanimated>
+        <AnimatedReanimated entering={FadeIn.duration(1000).delay(600)} style={styles.leafBottomRight}>
+          <LeafDecoration size={45} color={isDark ? '#34D399' : '#10B981'} />
+        </AnimatedReanimated>
+      </View>
+
+      <AchievementCelebration
+        achievement={celebrationAchievement}
+        onClose={() => setCelebrationAchievement(null)}
+      />
+
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}

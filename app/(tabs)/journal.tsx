@@ -15,6 +15,8 @@ import { supabase } from '@/lib/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Plus, BookOpen, Trash2, Edit, X, Sparkles } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import Animated, { FadeIn } from 'react-native-reanimated';
+import { FloatingCircles, JournalIllustration, LeafDecoration } from '@/components/Illustrations';
 
 interface JournalEntry {
   id: string;
@@ -147,10 +149,31 @@ export default function JournalScreen() {
     });
   };
 
+  const isDark = theme.text === '#FFFFFF';
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.background,
+    },
+    decorativeElements: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      zIndex: 0,
+    },
+    journalIllustration: {
+      position: 'absolute',
+      top: 120,
+      right: 20,
+      opacity: 0.15,
+    },
+    leafBottomLeft: {
+      position: 'absolute',
+      bottom: 100,
+      left: 10,
+      transform: [{ rotate: '15deg' }],
+      opacity: 0.25,
     },
     headerGradient: {
       paddingTop: 60,
@@ -363,6 +386,17 @@ export default function JournalScreen() {
 
   return (
     <View style={styles.container}>
+      <FloatingCircles isDark={isDark} />
+
+      <View style={styles.decorativeElements}>
+        <Animated entering={FadeIn.duration(1000).delay(300)} style={styles.journalIllustration}>
+          <JournalIllustration size={120} isDark={isDark} />
+        </Animated>
+        <Animated entering={FadeIn.duration(1000).delay(500)} style={styles.leafBottomLeft}>
+          <LeafDecoration size={60} color={isDark ? '#10B981' : '#059669'} />
+        </Animated>
+      </View>
+
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}

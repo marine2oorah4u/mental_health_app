@@ -22,6 +22,8 @@ import {
 } from 'lucide-react-native';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'expo-router';
+import Animated, { FadeIn } from 'react-native-reanimated';
+import { FloatingCircles, HeartIllustration, SparkleDecoration } from '@/components/Illustrations';
 
 const { width } = Dimensions.get('window');
 const CHART_WIDTH = width - 48;
@@ -277,10 +279,30 @@ export default function MoodTrackerScreen() {
     );
   };
 
+  const isDark = theme.text === '#FFFFFF';
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.background,
+    },
+    decorativeElements: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      zIndex: 0,
+    },
+    heartTop: {
+      position: 'absolute',
+      top: 140,
+      right: 30,
+      opacity: 0.2,
+    },
+    sparkleBottom: {
+      position: 'absolute',
+      bottom: 150,
+      left: 25,
+      opacity: 0.3,
     },
     headerGradient: {
       paddingTop: 60,
@@ -470,6 +492,17 @@ export default function MoodTrackerScreen() {
 
   return (
     <View style={styles.container}>
+      <FloatingCircles isDark={isDark} />
+
+      <View style={styles.decorativeElements}>
+        <Animated entering={FadeIn.duration(1000).delay(300)} style={styles.heartTop}>
+          <HeartIllustration size={100} isDark={isDark} />
+        </Animated>
+        <Animated entering={FadeIn.duration(1000).delay(500)} style={styles.sparkleBottom}>
+          <SparkleDecoration size={35} color={isDark ? '#FCD34D' : '#F59E0B'} />
+        </Animated>
+      </View>
+
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}

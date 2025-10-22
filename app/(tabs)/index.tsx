@@ -26,6 +26,8 @@ import {
   Menu,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { FadeIn } from 'react-native-reanimated';
+import { FloatingCircles, LeafDecoration, SparkleDecoration, HeartIllustration } from '@/components/Illustrations';
 
 const { width } = Dimensions.get('window');
 
@@ -159,8 +161,27 @@ export default function HomeScreen() {
     }
   };
 
+  const isDark = theme.text === '#FFFFFF';
+
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <FloatingCircles isDark={isDark} />
+
+      <View style={styles.decorativeElements}>
+        <Animated.View entering={FadeIn.duration(1000).delay(200)} style={styles.leafTopLeft}>
+          <LeafDecoration size={40} color={isDark ? '#10B981' : '#059669'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(400)} style={styles.leafTopRight}>
+          <LeafDecoration size={35} color={isDark ? '#34D399' : '#10B981'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(600)} style={styles.sparkleTop}>
+          <SparkleDecoration size={28} color={isDark ? '#FCD34D' : '#F59E0B'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(800)} style={styles.heartDecoration}>
+          <HeartIllustration size={80} isDark={isDark} />
+        </Animated.View>
+      </View>
+
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}
@@ -289,6 +310,35 @@ function FeatureCardComponent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  decorativeElements: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 0,
+  },
+  leafTopLeft: {
+    position: 'absolute',
+    top: 80,
+    left: 15,
+    transform: [{ rotate: '-25deg' }],
+  },
+  leafTopRight: {
+    position: 'absolute',
+    top: 100,
+    right: 20,
+    transform: [{ rotate: '35deg' }],
+  },
+  sparkleTop: {
+    position: 'absolute',
+    top: 140,
+    left: 60,
+  },
+  heartDecoration: {
+    position: 'absolute',
+    bottom: 120,
+    right: 20,
+    opacity: 0.4,
   },
   header: {
     paddingTop: 60,
