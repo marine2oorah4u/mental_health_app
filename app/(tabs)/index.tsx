@@ -182,41 +182,41 @@ export default function HomeScreen() {
         </Animated.View>
       </View>
 
-      <LinearGradient
-        colors={[theme.primary, theme.secondary]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.header}
-      >
-        <View style={styles.headerTop}>
-          <View>
-            <Text style={styles.greeting}>{greeting}!</Text>
-            <Text style={styles.userName}>{userName || 'Welcome'}</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => router.push('/(tabs)/profile')}
-          >
-            <Menu size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
-
-        {currentStreak > 0 && (
-          <View style={styles.streakCard}>
-            <TrendingUp size={20} color="#FFD700" />
-            <Text style={styles.streakText}>
-              {currentStreak} day streak!
-            </Text>
-            <Sparkles size={20} color="#FFD700" />
-          </View>
-        )}
-      </LinearGradient>
-
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
+        <LinearGradient
+          colors={[theme.primary, theme.secondary]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.header}
+        >
+          <View style={styles.headerTop}>
+            <View>
+              <Text style={styles.greeting}>{greeting}!</Text>
+              <Text style={styles.userName}>{userName || 'Welcome'}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.menuButton}
+              onPress={() => router.push('/(tabs)/profile')}
+            >
+              <Menu size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
+
+          {currentStreak > 0 && (
+            <View style={styles.streakCard}>
+              <TrendingUp size={20} color="#FFD700" />
+              <Text style={styles.streakText}>
+                {currentStreak} day streak!
+              </Text>
+              <Sparkles size={20} color="#FFD700" />
+            </View>
+          )}
+        </LinearGradient>
+
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: theme.text }]}>
             Daily Activities
@@ -348,6 +348,9 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    marginBottom: 20,
   },
   headerTop: {
     flexDirection: 'row',
@@ -392,7 +395,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 100,
   },
   section: {
     marginBottom: 32,
