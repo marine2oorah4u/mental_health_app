@@ -167,18 +167,6 @@ export default function HomeScreen() {
     if (prefs?.background_pattern) {
       setBackgroundPattern(prefs.background_pattern);
     }
-
-    const today = new Date().toISOString().split('T')[0];
-    const { data: checkin } = await supabase
-      .from('daily_checkins')
-      .select('streak')
-      .eq('user_id', user.id)
-      .eq('date', today)
-      .maybeSingle();
-
-    if (checkin?.streak) {
-      setCurrentStreak(checkin.streak);
-    }
   };
 
   const isDark = theme.text === '#FFFFFF';
