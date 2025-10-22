@@ -1,9 +1,14 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
-
-const { width, height } = Dimensions.get('window');
+import {
+  BrainIllustration,
+  LeafDecoration,
+  SparkleDecoration,
+  FloatingCircles,
+  GearDecoration,
+} from '@/components/Illustrations';
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -12,67 +17,26 @@ export default function WelcomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#1a1a1a' : '#f5f0e8' }]}>
-      <View style={styles.decorativeElements}>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(200)}
-          style={[styles.leaf, styles.leafTopLeft]}
-        >
-          <Text style={styles.leafEmoji}>🌿</Text>
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(400)}
-          style={[styles.leaf, styles.leafTopRight]}
-        >
-          <Text style={[styles.leafEmoji, { fontSize: 32 }]}>🌿</Text>
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(300)}
-          style={[styles.sparkle, { top: 120, left: 50 }]}
-        >
-          <Text style={styles.sparkleText}>✨</Text>
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(500)}
-          style={[styles.sparkle, { top: 160, right: 60 }]}
-        >
-          <Text style={styles.sparkleText}>⚙️</Text>
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(700)}
-          style={[styles.sparkle, { bottom: 250, left: 80 }]}
-        >
-          <Text style={[styles.sparkleText, { fontSize: 12 }]}>✨</Text>
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(600)}
-          style={[styles.sparkle, { top: 200, left: 30 }]}
-        >
-          <View style={[styles.dot, { backgroundColor: isDark ? '#60A5FA' : '#93C5FD' }]} />
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(800)}
-          style={[styles.sparkle, { top: 140, right: 100 }]}
-        >
-          <View style={[styles.dot, { backgroundColor: isDark ? '#34D399' : '#6EE7B7' }]} />
-        </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(900)}
-          style={[styles.sparkle, { bottom: 280, right: 50 }]}
-        >
-          <View style={[styles.dot, { backgroundColor: isDark ? '#F472B6' : '#F9A8D4' }]} />
-        </Animated.View>
+      <FloatingCircles isDark={isDark} />
 
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(400)}
-          style={[styles.leafBottom, styles.leafBottomLeft]}
-        >
-          <Text style={[styles.leafEmoji, { fontSize: 60 }]}>🌿</Text>
+      <View style={styles.decorativeElements}>
+        <Animated.View entering={FadeIn.duration(1000).delay(200)} style={styles.leafTopLeft}>
+          <LeafDecoration size={50} color={isDark ? '#10B981' : '#059669'} />
         </Animated.View>
-        <Animated.View
-          entering={FadeIn.duration(1000).delay(600)}
-          style={[styles.leafBottom, styles.leafBottomRight]}
-        >
-          <Text style={[styles.leafEmoji, { fontSize: 50 }]}>🌿</Text>
+        <Animated.View entering={FadeIn.duration(1000).delay(400)} style={styles.leafTopRight}>
+          <LeafDecoration size={40} color={isDark ? '#34D399' : '#10B981'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(600)} style={styles.sparkleTop}>
+          <SparkleDecoration size={30} color={isDark ? '#FCD34D' : '#F59E0B'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(800)} style={styles.gearTop}>
+          <GearDecoration size={35} color={isDark ? '#9CA3AF' : '#6B7280'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(400)} style={styles.leafBottomLeft}>
+          <LeafDecoration size={70} color={isDark ? '#10B981' : '#059669'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(600)} style={styles.leafBottomRight}>
+          <LeafDecoration size={60} color={isDark ? '#34D399' : '#10B981'} />
         </Animated.View>
       </View>
 
@@ -81,18 +45,7 @@ export default function WelcomeScreen() {
           entering={FadeInDown.duration(800).delay(300)}
           style={styles.illustrationContainer}
         >
-          <View style={styles.brainWrapper}>
-            <View style={styles.lightBulb}>
-              <View style={[styles.lightBulbGlow, { opacity: isDark ? 0.3 : 0.5 }]} />
-              <Text style={styles.lightBulbEmoji}>💡</Text>
-            </View>
-            <View style={styles.brainContainer}>
-              <Text style={styles.brainEmoji}>🧠</Text>
-            </View>
-            <View style={styles.gearTop}>
-              <Text style={styles.gearEmoji}>⚙️</Text>
-            </View>
-          </View>
+          <BrainIllustration size={220} isDark={isDark} />
         </Animated.View>
 
         <Animated.View
@@ -145,48 +98,40 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  leaf: {
-    position: 'absolute',
-  },
   leafTopLeft: {
-    top: 60,
-    left: 30,
+    position: 'absolute',
+    top: 70,
+    left: 20,
     transform: [{ rotate: '-25deg' }],
   },
   leafTopRight: {
+    position: 'absolute',
     top: 100,
     right: 30,
     transform: [{ rotate: '35deg' }],
   },
-  leafBottom: {
+  sparkleTop: {
     position: 'absolute',
+    top: 130,
+    left: 60,
+  },
+  gearTop: {
+    position: 'absolute',
+    top: 160,
+    right: 70,
+    transform: [{ rotate: '15deg' }],
   },
   leafBottomLeft: {
-    bottom: 0,
-    left: -10,
+    position: 'absolute',
+    bottom: -10,
+    left: -15,
     transform: [{ rotate: '15deg' }],
   },
   leafBottomRight: {
-    bottom: 0,
-    right: -5,
-    transform: [{ rotate: '-15deg' }],
-  },
-  leafEmoji: {
-    fontSize: 40,
-    opacity: 0.6,
-  },
-  sparkle: {
     position: 'absolute',
-  },
-  sparkleText: {
-    fontSize: 16,
-    opacity: 0.6,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    opacity: 0.6,
+    bottom: -5,
+    right: -10,
+    transform: [{ rotate: '-15deg' }],
   },
   content: {
     flex: 1,
@@ -196,49 +141,8 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   illustrationContainer: {
-    marginBottom: 50,
+    marginBottom: 40,
     alignItems: 'center',
-  },
-  brainWrapper: {
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 220,
-  },
-  lightBulb: {
-    position: 'absolute',
-    top: -10,
-    left: -20,
-    zIndex: 10,
-  },
-  lightBulbGlow: {
-    position: 'absolute',
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: '#FEF3C7',
-    top: -10,
-    left: -10,
-  },
-  lightBulbEmoji: {
-    fontSize: 50,
-  },
-  brainContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  brainEmoji: {
-    fontSize: 140,
-  },
-  gearTop: {
-    position: 'absolute',
-    top: -5,
-    right: -15,
-    zIndex: 5,
-  },
-  gearEmoji: {
-    fontSize: 35,
-    opacity: 0.7,
   },
   textContainer: {
     alignItems: 'center',

@@ -4,7 +4,8 @@ import { useRouter } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
+import { LeafDecoration, FloatingCircles } from '@/components/Illustrations';
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState('');
@@ -46,11 +47,21 @@ export default function SignUpScreen() {
       style={[styles.container, { backgroundColor: isDark ? '#1a1a1a' : '#f5f0e8' }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
+      <FloatingCircles isDark={isDark} />
+
       <View style={styles.decorativeElements}>
-        <Text style={[styles.leafEmoji, styles.leafTopLeft]}>🌿</Text>
-        <Text style={[styles.leafEmoji, styles.leafTopRight, { fontSize: 32 }]}>🌿</Text>
-        <Text style={[styles.leafEmoji, styles.leafBottomLeft, { fontSize: 60 }]}>🌿</Text>
-        <Text style={[styles.leafEmoji, styles.leafBottomRight, { fontSize: 50 }]}>🌿</Text>
+        <Animated.View entering={FadeIn.duration(1000).delay(200)} style={styles.leafTopLeft}>
+          <LeafDecoration size={45} color={isDark ? '#10B981' : '#059669'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(400)} style={styles.leafTopRight}>
+          <LeafDecoration size={35} color={isDark ? '#34D399' : '#10B981'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(400)} style={styles.leafBottomLeft}>
+          <LeafDecoration size={65} color={isDark ? '#10B981' : '#059669'} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(600)} style={styles.leafBottomRight}>
+          <LeafDecoration size={55} color={isDark ? '#34D399' : '#10B981'} />
+        </Animated.View>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
@@ -183,29 +194,28 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  leafEmoji: {
-    position: 'absolute',
-    fontSize: 40,
-    opacity: 0.4,
-  },
   leafTopLeft: {
-    top: 60,
-    left: 20,
+    position: 'absolute',
+    top: 70,
+    left: 15,
     transform: [{ rotate: '-25deg' }],
   },
   leafTopRight: {
-    top: 80,
+    position: 'absolute',
+    top: 90,
     right: 20,
     transform: [{ rotate: '35deg' }],
   },
   leafBottomLeft: {
-    bottom: 0,
-    left: -10,
+    position: 'absolute',
+    bottom: -10,
+    left: -15,
     transform: [{ rotate: '15deg' }],
   },
   leafBottomRight: {
-    bottom: 0,
-    right: -5,
+    position: 'absolute',
+    bottom: -5,
+    right: -10,
     transform: [{ rotate: '-15deg' }],
   },
   scrollContent: {
