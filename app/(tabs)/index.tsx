@@ -5,7 +5,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -70,7 +72,7 @@ export default function HomeScreen() {
       backgroundColor: theme.background,
     },
     headerGradient: {
-      paddingTop: 60,
+      paddingTop: Platform.OS === 'web' ? 60 : 20,
       paddingHorizontal: 20,
       paddingBottom: 80,
     },
@@ -263,7 +265,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}
@@ -379,6 +381,6 @@ export default function HomeScreen() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
