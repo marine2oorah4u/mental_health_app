@@ -168,8 +168,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [themeName, setThemeNameState] = useState<ThemeName | 'custom'>('forest_peace');
   const [fontSize, setFontSizeState] = useState<FontSize>('medium');
   const [customTheme, setCustomThemeState] = useState<ThemeColors | null>(null);
+  const [updateTrigger, setUpdateTrigger] = useState(0);
 
-  console.log('ThemeProvider render - themeName:', themeName);
+  console.log('ThemeProvider render - themeName:', themeName, 'trigger:', updateTrigger);
 
   useEffect(() => {
     loadPreferences();
@@ -217,6 +218,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     console.log('setTheme called with:', name);
     console.log('Before setState, themeName is:', themeName);
     setThemeNameState(name);
+    setUpdateTrigger(prev => prev + 1);
     console.log('After setState called');
     await AsyncStorage.setItem('theme', name);
 
@@ -274,7 +276,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme,
     setCustomTheme,
     setFontSize,
-  }), [themeName, currentTheme, fontSize, customTheme]);
+  }), [themeName, currentTheme, fontSize, customTheme, updateTrigger]);
 
   return (
     <ThemeContext.Provider value={contextValue}>
