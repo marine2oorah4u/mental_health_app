@@ -203,7 +203,7 @@ export default function MoodTrackerScreen() {
                     style={[
                       styles.bar,
                       {
-                        height: `${percentage}%`,
+                        flex: percentage / 100,
                         backgroundColor: mood.color,
                       },
                     ]}
