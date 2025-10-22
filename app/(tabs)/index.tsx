@@ -13,12 +13,12 @@ export default function HomeScreen() {
   const { user } = useAuth();
 
   const quickActions = [
-    { icon: Wind, label: 'Breathe', color: theme.primary, route: '/(tabs)/wellness' },
-    { icon: Music, label: 'Sounds', color: theme.secondary, route: '/(tabs)/wellness' },
-    { icon: Heart, label: 'Mood Log', color: theme.accent, route: '/(tabs)/wellness' },
-    { icon: BookOpen, label: 'Journal', color: theme.primary, route: '/(tabs)/wellness' },
+    { icon: Wind, label: 'Breathe', color: theme.primary, route: '/(tabs)/breathing' },
+    { icon: Music, label: 'Sounds', color: theme.secondary, route: '/(tabs)/sounds' },
+    { icon: Heart, label: 'Mood Log', color: theme.accent, route: '/(tabs)/daily-checkin' },
+    { icon: BookOpen, label: 'Journal', color: theme.primary, route: '/(tabs)/journal' },
     { icon: LifeBuoy, label: 'Resources', color: '#DC2626', route: '/(tabs)/resources' },
-    { icon: Phone, label: 'Crisis Line', color: '#059669', route: '/(tabs)/resources' },
+    { icon: Phone, label: 'Crisis Line', color: '#059669', route: '/(tabs)/crisis-resources' },
   ];
 
   const styles = StyleSheet.create({
