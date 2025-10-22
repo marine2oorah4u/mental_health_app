@@ -269,16 +269,7 @@ export default function CompanionScreen() {
 
   const loadVoiceSettings = async () => {
     if (!user?.id) return;
-
-    const { data } = await supabase
-      .from('user_preferences')
-      .select('voice_settings')
-      .eq('user_id', user.id)
-      .maybeSingle();
-
-    if (data?.voice_settings) {
-      setVoiceSettings(data.voice_settings);
-    }
+    setVoiceSettings(defaultVoiceSettings);
   };
 
   const handleVoiceInput = async () => {
