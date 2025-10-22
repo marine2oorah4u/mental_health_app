@@ -606,12 +606,12 @@ export default function MoodTrackerScreen() {
       <FloatingCircles isDark={isDark} />
 
       <View style={styles.decorativeElements}>
-        <Animated entering={FadeIn.duration(1000).delay(300)} style={styles.heartTop}>
+        <Animated.View entering={FadeIn.duration(1000).delay(300)} style={styles.heartTop}>
           <HeartIllustration size={100} isDark={isDark} />
-        </Animated>
-        <Animated entering={FadeIn.duration(1000).delay(500)} style={styles.sparkleBottom}>
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(1000).delay(500)} style={styles.sparkleBottom}>
           <SparkleDecoration size={35} color={isDark ? '#FCD34D' : '#F59E0B'} />
-        </Animated>
+        </Animated.View>
       </View>
 
       <LinearGradient
