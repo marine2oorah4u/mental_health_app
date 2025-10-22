@@ -18,7 +18,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Gentle waves on the beach',
     category: 'nature',
     environments: ['beach', 'cozy'],
-    url: 'https://cdn.freesound.org/previews/535/535997_11935698-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2390/2390-preview.mp3',
   },
   {
     id: 'rain-gentle',
@@ -26,7 +26,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Soft rainfall sounds',
     category: 'nature',
     environments: ['cozy', 'garden', 'forest'],
-    url: 'https://cdn.freesound.org/previews/416/416710_7193358-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2393/2393-preview.mp3',
   },
   {
     id: 'forest-birds',
@@ -34,7 +34,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Morning birds chirping',
     category: 'nature',
     environments: ['garden', 'forest', 'mountain'],
-    url: 'https://cdn.freesound.org/previews/449/449066_5121236-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2465/2465-preview.mp3',
   },
   {
     id: 'wind-gentle',
@@ -42,7 +42,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Soft breeze through trees',
     category: 'nature',
     environments: ['garden', 'mountain', 'forest'],
-    url: 'https://cdn.freesound.org/previews/391/391660_7193358-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2394/2394-preview.mp3',
   },
   {
     id: 'fireplace',
@@ -50,7 +50,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Crackling fire',
     category: 'ambient',
     environments: ['cozy', 'mountain'],
-    url: 'https://cdn.freesound.org/previews/397/397359_7193358-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2392/2392-preview.mp3',
   },
   {
     id: 'city-ambience',
@@ -58,7 +58,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Distant city sounds',
     category: 'ambient',
     environments: ['city', 'office'],
-    url: 'https://cdn.freesound.org/previews/439/439898_8462944-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2487/2487-preview.mp3',
   },
   {
     id: 'white-noise',
@@ -66,7 +66,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Steady static sound',
     category: 'white-noise',
     environments: ['office', 'city', 'cozy'],
-    url: 'https://cdn.freesound.org/previews/204/204699_1015240-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2395/2395-preview.mp3',
   },
   {
     id: 'space-ambient',
@@ -74,7 +74,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Cosmic atmosphere',
     category: 'ambient',
     environments: ['space'],
-    url: 'https://cdn.freesound.org/previews/561/561873_12517828-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2489/2489-preview.mp3',
   },
   {
     id: 'calm-music',
@@ -82,7 +82,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Peaceful piano melody',
     category: 'music',
     environments: ['cozy', 'office', 'mountain'],
-    url: 'https://cdn.freesound.org/previews/467/467812_9497060-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2529/2529-preview.mp3',
   },
   {
     id: 'meditation-bowl',
@@ -90,7 +90,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Singing bowl resonance',
     category: 'ambient',
     environments: ['garden', 'mountain', 'space'],
-    url: 'https://cdn.freesound.org/previews/528/528489_11935698-lq.mp3',
+    url: 'https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3',
   },
 ];
 
