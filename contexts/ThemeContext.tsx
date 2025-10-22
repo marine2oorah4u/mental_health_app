@@ -212,7 +212,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const setTheme = async (name: ThemeName) => {
+    console.log('Setting theme to:', name);
     setThemeNameState(name);
+    console.log('Theme state updated');
     await AsyncStorage.setItem('theme', name);
 
     const { data: { user } } = await supabase.auth.getUser();
@@ -256,6 +258,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const currentTheme = themeName === 'custom' && customTheme ? customTheme : THEMES[themeName as ThemeName] || THEMES.forest_peace;
+
+  console.log('Current themeName:', themeName);
+  console.log('Current theme colors:', currentTheme.primary, currentTheme.background);
 
   return (
     <ThemeContext.Provider

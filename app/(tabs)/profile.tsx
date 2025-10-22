@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize, THEMES, ThemeName } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User, LogOut, Palette, Type, Plus, Brain, Trophy, Settings, Volume2, Music, Home, Users, Link2, Heart, Pill, Image } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -12,6 +12,12 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [tapCount, setTapCount] = useState(0);
   const [lastTapTime, setLastTapTime] = useState(0);
+  const [, forceUpdate] = useState({});
+
+  // Force re-render when theme changes
+  useEffect(() => {
+    forceUpdate({});
+  }, [themeName, theme]);
 
   const handleSignOut = async () => {
     await signOut();
