@@ -137,7 +137,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View key={themeName} style={styles.container}>
       <LinearGradient
         colors={[theme.primary, theme.secondary]}
         start={{ x: 0, y: 0 }}
