@@ -42,6 +42,9 @@ interface MoodStats {
   bestDay: string;
   streak: number;
   moodTrend: 'improving' | 'stable' | 'declining';
+  moodDistribution: { [key: number]: number };
+  averageEnergy: number;
+  averageAnxiety: number;
 }
 
 const MOOD_OPTIONS = [
@@ -111,6 +114,23 @@ export default function MoodTrackerScreen() {
       entry.mood_rating > best.mood_rating ? entry : best
     );
 
+    // Calculate mood distribution
+    const moodDistribution: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    data.forEach((entry) => {
+      const rounded = Math.round(entry.mood_rating);
+      moodDistribution[rounded] = (moodDistribution[rounded] || 0) + 1;
+    });
+
+    // Calculate average energy and anxiety
+    const energyData = data.filter((e) => e.energy_level);
+    const anxietyData = data.filter((e) => e.anxiety_level);
+    const averageEnergy = energyData.length
+      ? energyData.reduce((sum, e) => sum + (e.energy_level || 0), 0) / energyData.length
+      : 0;
+    const averageAnxiety = anxietyData.length
+      ? anxietyData.reduce((sum, e) => sum + (e.anxiety_level || 0), 0) / anxietyData.length
+      : 0;
+
     // Calculate streak
     let streak = 0;
     const today = new Date();
@@ -148,6 +168,9 @@ export default function MoodTrackerScreen() {
       bestDay: bestEntry.check_in_date,
       streak,
       moodTrend,
+      moodDistribution,
+      averageEnergy: Math.round(averageEnergy * 10) / 10,
+      averageAnxiety: Math.round(averageAnxiety * 10) / 10,
     });
   };
 
@@ -159,6 +182,41 @@ export default function MoodTrackerScreen() {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  const renderMoodDistribution = () => {
+    if (!stats) return null;
+
+    const maxCount = Math.max(...Object.values(stats.moodDistribution));
+
+    return (
+      <View style={styles.chartContainer}>
+        <View style={styles.barChartContainer}>
+          {MOOD_OPTIONS.map((mood) => {
+            const count = stats.moodDistribution[mood.value] || 0;
+            const percentage = maxCount > 0 ? (count / maxCount) * 100 : 0;
+
+            return (
+              <View key={mood.value} style={styles.barColumn}>
+                <View style={styles.barWrapper}>
+                  <View
+                    style={[
+                      styles.bar,
+                      {
+                        height: `${percentage}%`,
+                        backgroundColor: mood.color,
+                      },
+                    ]}
+                  />
+                </View>
+                <Text style={styles.barCount}>{count}</Text>
+                <Text style={styles.barLabel}>{mood.label}</Text>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    );
   };
 
   const renderLineChart = () => {
@@ -488,6 +546,59 @@ export default function MoodTrackerScreen() {
       color: '#FFFFFF',
       marginLeft: 8,
     },
+    barChartContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'flex-end',
+      height: 180,
+      paddingBottom: 40,
+    },
+    barColumn: {
+      flex: 1,
+      alignItems: 'center',
+      marginHorizontal: 4,
+    },
+    barWrapper: {
+      width: '100%',
+      height: 120,
+      justifyContent: 'flex-end',
+    },
+    bar: {
+      width: '100%',
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
+      minHeight: 4,
+    },
+    barCount: {
+      fontSize: getFontSize(fontSize, 'small'),
+      fontWeight: '600',
+      color: theme.text,
+      marginTop: 6,
+    },
+    barLabel: {
+      fontSize: getFontSize(fontSize, 'xsmall'),
+      color: theme.textSecondary,
+      marginTop: 4,
+      textAlign: 'center',
+    },
+    insightCard: {
+      backgroundColor: theme.surface,
+      borderRadius: 16,
+      padding: 16,
+      marginBottom: 12,
+      borderLeftWidth: 4,
+    },
+    insightTitle: {
+      fontSize: getFontSize(fontSize, 'body'),
+      fontWeight: '600',
+      color: theme.text,
+      marginBottom: 4,
+    },
+    insightText: {
+      fontSize: getFontSize(fontSize, 'small'),
+      color: theme.textSecondary,
+      lineHeight: 20,
+    },
   });
 
   return (
@@ -596,6 +707,41 @@ export default function MoodTrackerScreen() {
 
           {renderLineChart()}
         </View>
+
+        {stats && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Mood Distribution</Text>
+            {renderMoodDistribution()}
+          </View>
+        )}
+
+        {stats && stats.averageEnergy > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Additional Insights</Text>
+
+            <View style={[styles.insightCard, { borderLeftColor: '#10B981' }]}>
+              <Text style={styles.insightTitle}>Energy Level</Text>
+              <Text style={styles.insightText}>
+                Your average energy level is {stats.averageEnergy.toFixed(1)}/5.
+                {stats.averageEnergy >= 4 ? ' You\'re maintaining great energy!' :
+                 stats.averageEnergy >= 3 ? ' Consider gentle activities to boost energy.' :
+                 ' Prioritize rest and self-care.'}
+              </Text>
+            </View>
+
+            {stats.averageAnxiety > 0 && (
+              <View style={[styles.insightCard, { borderLeftColor: '#F59E0B' }]}>
+                <Text style={styles.insightTitle}>Anxiety Management</Text>
+                <Text style={styles.insightText}>
+                  Your average anxiety level is {stats.averageAnxiety.toFixed(1)}/5.
+                  {stats.averageAnxiety >= 4 ? ' Consider reaching out to support resources.' :
+                   stats.averageAnxiety >= 3 ? ' Try breathing exercises or meditation.' :
+                   ' You\'re managing anxiety well!'}
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
 
         <TouchableOpacity
           style={styles.actionButton}

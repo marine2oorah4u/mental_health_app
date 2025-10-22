@@ -199,6 +199,30 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="goals"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="background-settings"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="edit-profile"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="onboarding"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }
