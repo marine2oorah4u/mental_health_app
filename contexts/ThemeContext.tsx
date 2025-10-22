@@ -157,9 +157,11 @@ interface ThemeContextType {
   theme: ThemeColors;
   fontSize: FontSize;
   customTheme: ThemeColors | null;
+  backgroundPattern: string;
   setTheme: (name: ThemeName) => void;
   setCustomTheme: (colors: ThemeColors) => void;
   setFontSize: (size: FontSize) => void;
+  setBackgroundPattern: (pattern: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -168,6 +170,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [themeName, setThemeNameState] = useState<ThemeName | 'custom'>('forest_peace');
   const [fontSize, setFontSizeState] = useState<FontSize>('medium');
   const [customTheme, setCustomThemeState] = useState<ThemeColors | null>(null);
+  const [backgroundPattern, setBackgroundPatternState] = useState('botanical');
   const [updateTrigger, setUpdateTrigger] = useState(0);
 
   console.log('ThemeProvider render - themeName:', themeName, 'trigger:', updateTrigger);
@@ -198,16 +201,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             setFontSizeState(profile.font_size as FontSize);
           }
         }
+
+        const { data: prefs } = await supabase
+          .from('user_preferences')
+          .select('background_pattern')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (prefs?.background_pattern) {
+          setBackgroundPatternState(prefs.background_pattern);
+        }
       } else {
         const savedTheme = await AsyncStorage.getItem('theme');
         const savedFontSize = await AsyncStorage.getItem('fontSize');
         const savedCustomTheme = await AsyncStorage.getItem('customTheme');
+        const savedPattern = await AsyncStorage.getItem('backgroundPattern');
 
         if (savedCustomTheme) {
           setCustomThemeState(JSON.parse(savedCustomTheme));
         }
         if (savedTheme) setThemeNameState(savedTheme as ThemeName | 'custom');
         if (savedFontSize) setFontSizeState(savedFontSize as FontSize);
+        if (savedPattern) setBackgroundPatternState(savedPattern);
       }
     } catch (error) {
       console.error('Error loading theme preferences:', error);
@@ -262,6 +277,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const setBackgroundPattern = (pattern: string) => {
+    setBackgroundPatternState(pattern);
+  };
+
   const currentTheme = useMemo(() => {
     const theme = themeName === 'custom' && customTheme ? customTheme : THEMES[themeName as ThemeName] || THEMES.forest_peace;
     console.log('Computing currentTheme for:', themeName, theme.primary);
@@ -273,10 +292,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     theme: currentTheme,
     fontSize,
     customTheme,
+    backgroundPattern,
     setTheme,
     setCustomTheme,
     setFontSize,
-  }), [themeName, currentTheme, fontSize, customTheme, updateTrigger]);
+    setBackgroundPattern,
+  }), [themeName, currentTheme, fontSize, customTheme, backgroundPattern, updateTrigger]);
 
   return (
     <ThemeContext.Provider value={contextValue}>

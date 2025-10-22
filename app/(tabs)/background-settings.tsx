@@ -63,10 +63,9 @@ const PATTERNS: PatternOption[] = [
 ];
 
 export default function BackgroundSettingsScreen() {
-  const { theme } = useTheme();
+  const { theme, backgroundPattern, setBackgroundPattern } = useTheme();
   const { user } = useAuth();
   const [selectedPattern, setSelectedPattern] = useState('botanical');
-  const [currentPattern, setCurrentPattern] = useState('botanical');
   const [saving, setSaving] = useState(false);
 
   const isDark = theme.text === '#FFFFFF';
@@ -74,6 +73,10 @@ export default function BackgroundSettingsScreen() {
   useEffect(() => {
     loadPreference();
   }, [user]);
+
+  useEffect(() => {
+    setSelectedPattern(backgroundPattern);
+  }, [backgroundPattern]);
 
   const loadPreference = async () => {
     if (!user) return;
@@ -86,7 +89,6 @@ export default function BackgroundSettingsScreen() {
 
     if (data?.background_pattern) {
       setSelectedPattern(data.background_pattern);
-      setCurrentPattern(data.background_pattern);
     }
   };
 
@@ -112,7 +114,7 @@ export default function BackgroundSettingsScreen() {
         .insert({ user_id: user.id, background_pattern: selectedPattern });
     }
 
-    setCurrentPattern(selectedPattern);
+    setBackgroundPattern(selectedPattern);
     setSaving(false);
   };
 
@@ -174,7 +176,7 @@ export default function BackgroundSettingsScreen() {
           })}
         </View>
 
-        {selectedPattern !== currentPattern && (
+        {selectedPattern !== backgroundPattern && (
           <TouchableOpacity
             style={[styles.applyButton, { backgroundColor: theme.primary }]}
             onPress={applyPattern}

@@ -126,13 +126,11 @@ const FEATURES: FeatureCard[] = [
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { theme } = useTheme();
+  const { theme, backgroundPattern } = useTheme();
   const { user } = useAuth();
-  const isFocused = useIsFocused();
   const [userName, setUserName] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [greeting, setGreeting] = useState('');
-  const [backgroundPattern, setBackgroundPattern] = useState('botanical');
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -143,7 +141,7 @@ export default function HomeScreen() {
     if (user) {
       loadUserData();
     }
-  }, [user, isFocused]);
+  }, [user]);
 
   const loadUserData = async () => {
     if (!user) return;
@@ -156,16 +154,6 @@ export default function HomeScreen() {
 
     if (profile?.username) {
       setUserName(profile.username);
-    }
-
-    const { data: prefs } = await supabase
-      .from('user_preferences')
-      .select('background_pattern')
-      .eq('user_id', user.id)
-      .maybeSingle();
-
-    if (prefs?.background_pattern) {
-      setBackgroundPattern(prefs.background_pattern);
     }
   };
 
