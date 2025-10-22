@@ -169,6 +169,18 @@ export default function TabLayout() {
           href: null,
         }}
       />
+      <Tabs.Screen
+        name="mood-tracker"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="affirmations"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

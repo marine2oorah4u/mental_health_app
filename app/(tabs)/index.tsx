@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from
 import { useRouter } from 'expo-router';
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CheckCircle, Calendar, LifeBuoy } from 'lucide-react-native';
+import { Heart, Wind, Music, BookOpen, Phone, Sparkles, CheckCircle, Calendar, LifeBuoy, MessageSquare, AlertTriangle } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -15,10 +15,10 @@ export default function HomeScreen() {
   const quickActions = [
     { icon: Wind, label: 'Breathe', color: theme.primary, route: '/(tabs)/breathing' },
     { icon: Music, label: 'Sounds', color: theme.secondary, route: '/(tabs)/sounds' },
-    { icon: Heart, label: 'Mood Log', color: theme.accent, route: '/(tabs)/daily-checkin' },
-    { icon: BookOpen, label: 'Journal', color: theme.primary, route: '/(tabs)/journal' },
-    { icon: LifeBuoy, label: 'Resources', color: '#DC2626', route: '/(tabs)/resources' },
-    { icon: Phone, label: 'Crisis Line', color: '#059669', route: '/(tabs)/crisis-resources' },
+    { icon: Heart, label: 'Mood', color: theme.accent, route: '/(tabs)/mood-tracker' },
+    { icon: Sparkles, label: 'Affirm', color: '#EC4899', route: '/(tabs)/affirmations' },
+    { icon: BookOpen, label: 'Journal', color: '#10B981', route: '/(tabs)/journal' },
+    { icon: LifeBuoy, label: 'Help', color: '#DC2626', route: '/(tabs)/resources' },
   ];
 
   const styles = StyleSheet.create({
@@ -150,6 +150,18 @@ export default function HomeScreen() {
       </LinearGradient>
 
       <ScrollView style={styles.content}>
+        <View style={styles.section}>
+          <TouchableOpacity
+            style={[styles.emergencyButton, { marginBottom: 24, backgroundColor: '#DC2626' }]}
+            onPress={() => router.push('/(tabs)/crisis-resources')}
+          >
+            <AlertTriangle size={28} color="#FFFFFF" />
+            <Text style={[styles.emergencyText, { fontSize: getFontSize(fontSize, 'large'), marginLeft: 12 }]}>
+              I'm Not Okay
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.section}>
           <TouchableOpacity
             style={[styles.dailyCard, { backgroundColor: `${theme.primary}15` }]}
