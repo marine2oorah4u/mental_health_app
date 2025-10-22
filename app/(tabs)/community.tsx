@@ -9,6 +9,8 @@ import {
   Alert,
 } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
+
+type TimerHandle = ReturnType<typeof setTimeout>;
 import { useTheme, getFontSize } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
@@ -69,7 +71,7 @@ export default function CommunityScreen() {
   const [selectedCategory, setSelectedCategory] = useState('Personal');
   const [loading, setLoading] = useState(false);
   const [showAchievements, setShowAchievements] = useState(true);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<TimerHandle | null>(null);
   const [notification, setNotification] = useState<{
     type: 'achievement' | 'post';
     username: string;

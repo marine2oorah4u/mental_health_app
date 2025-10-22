@@ -282,29 +282,52 @@ export function useTheme() {
   return context;
 }
 
-export const getFontSize = (size: FontSize, variant: 'small' | 'body' | 'heading' | 'title') => {
+export const getFontSize = (
+  size: FontSize,
+  variant: 'xsmall' | 'small' | 'body' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | 'heading' | 'title'
+) => {
   const sizes = {
     small: {
-      small: 10,
+      xsmall: 10,
+      small: 11,
       body: 12,
+      medium: 13,
+      large: 14,
+      xlarge: 16,
+      xxlarge: 18,
       heading: 16,
       title: 20,
     },
     medium: {
+      xsmall: 11,
       small: 12,
       body: 14,
+      medium: 15,
+      large: 16,
+      xlarge: 18,
+      xxlarge: 20,
       heading: 18,
       title: 24,
     },
     large: {
+      xsmall: 12,
       small: 14,
       body: 16,
+      medium: 17,
+      large: 18,
+      xlarge: 20,
+      xxlarge: 24,
       heading: 22,
       title: 28,
     },
     extra_large: {
+      xsmall: 14,
       small: 16,
       body: 18,
+      medium: 19,
+      large: 20,
+      xlarge: 24,
+      xxlarge: 28,
       heading: 26,
       title: 32,
     },

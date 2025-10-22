@@ -22,6 +22,8 @@
  * ```
  */
 
+import React from 'react';
+
 export interface CompanionEmotion {
   type: 'idle' | 'listening' | 'speaking' | 'happy' | 'concerned' | 'excited' | 'thinking';
   intensity?: number; // 0-1, for subtle vs intense emotions
@@ -58,7 +60,7 @@ export interface CompanionPluginProps {
 
 export interface CompanionPluginComponent {
   // The React component
-  (props: CompanionPluginProps): JSX.Element;
+  (props: CompanionPluginProps): React.ReactElement;
 }
 
 export interface CompanionPlugin {
