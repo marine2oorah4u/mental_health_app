@@ -174,15 +174,9 @@ export default function ProfileScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Appearance</Text>
-          <View style={styles.card} pointerEvents="box-none">
+          <View style={styles.card}>
             <Text style={styles.cardTitle}>Choose Theme</Text>
-            <TouchableOpacity
-              onPress={() => alert('TEST BUTTON WORKS')}
-              style={{ padding: 10, backgroundColor: '#ff0000', marginBottom: 10 }}
-            >
-              <Text style={{ color: '#fff' }}>TEST CLICK ME</Text>
-            </TouchableOpacity>
-            <View style={styles.themeGrid} pointerEvents="box-none">
+            <View style={styles.themeGrid}>
               {Object.keys(THEMES).map((key) => {
                 const themeKey = key as ThemeName;
                 const themeColors = THEMES[themeKey];
@@ -190,7 +184,6 @@ export default function ProfileScreen() {
                   <TouchableOpacity
                     key={key}
                     activeOpacity={0.7}
-                    pointerEvents="auto"
                     style={[
                       styles.themeButton,
                       { backgroundColor: themeColors.primary },
@@ -198,12 +191,9 @@ export default function ProfileScreen() {
                     ]}
                     onPress={() => {
                       console.log('Clicking theme:', themeKey, 'Current:', themeName);
-                      alert(`Clicked ${themeKey}`);
                       setTheme(themeKey);
                     }}
-                  >
-                    <View style={{ width: '100%', height: '100%' }} />
-                  </TouchableOpacity>
+                  />
                 );
               })}
               <TouchableOpacity
