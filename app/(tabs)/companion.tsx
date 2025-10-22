@@ -330,6 +330,7 @@ export default function CompanionScreen() {
       setParticleMood('excited');
       setParticleTrigger(prev => prev + 1);
       return 'excited';
+    }
     return 'neutral';
   };
 
