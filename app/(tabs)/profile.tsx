@@ -18,7 +18,8 @@ export default function ProfileScreen() {
     router.replace('/(auth)/welcome');
   };
 
-  const styles = StyleSheet.create({
+  // Create styles dynamically based on current theme
+  const styles = {
     container: {
       flex: 1,
       backgroundColor: theme.background,
@@ -133,7 +134,7 @@ export default function ProfileScreen() {
       marginLeft: 12,
       fontWeight: '600',
     },
-  });
+  };
 
   return (
     <View style={styles.container}>
