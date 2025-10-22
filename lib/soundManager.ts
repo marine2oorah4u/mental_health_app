@@ -18,7 +18,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Gentle waves on the beach',
     category: 'nature',
     environments: ['beach', 'cozy'],
-    url: 'https://cdn.pixabay.com/audio/2022/05/13/audio_257112e3cc.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'rain-gentle',
@@ -26,7 +26,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Soft rainfall sounds',
     category: 'nature',
     environments: ['cozy', 'garden', 'forest'],
-    url: 'https://cdn.pixabay.com/audio/2022/03/12/audio_4e30e1d03c.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'forest-birds',
@@ -34,7 +34,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Morning birds chirping',
     category: 'nature',
     environments: ['garden', 'forest', 'mountain'],
-    url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_c2bc788154.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'wind-gentle',
@@ -42,7 +42,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Soft breeze through trees',
     category: 'nature',
     environments: ['garden', 'mountain', 'forest'],
-    url: 'https://cdn.pixabay.com/audio/2022/03/24/audio_a969d71836.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'fireplace',
@@ -50,7 +50,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Crackling fire',
     category: 'ambient',
     environments: ['cozy', 'mountain'],
-    url: 'https://cdn.pixabay.com/audio/2021/08/09/audio_0625c1539c.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'coffee-shop',
@@ -58,7 +58,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Cozy cafe atmosphere',
     category: 'ambient',
     environments: ['city', 'office', 'cozy'],
-    url: 'https://cdn.pixabay.com/audio/2022/03/15/audio_14d098d97c.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'white-noise',
@@ -66,7 +66,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Steady static sound',
     category: 'white-noise',
     environments: ['office', 'city', 'cozy'],
-    url: 'https://cdn.pixabay.com/audio/2023/10/30/audio_c41c89137f.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'space-ambient',
@@ -74,7 +74,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Cosmic atmosphere',
     category: 'ambient',
     environments: ['space'],
-    url: 'https://cdn.pixabay.com/audio/2022/01/18/audio_ccef0a5743.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'calm-music',
@@ -82,7 +82,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Peaceful piano melody',
     category: 'music',
     environments: ['cozy', 'office', 'mountain'],
-    url: 'https://cdn.pixabay.com/audio/2023/12/25/audio_13ecc2c5cc.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
   {
     id: 'meditation-bowl',
@@ -90,7 +90,7 @@ export const SOUND_LIBRARY: SoundTrack[] = [
     description: 'Singing bowl resonance',
     category: 'ambient',
     environments: ['garden', 'mountain', 'space'],
-    url: 'https://cdn.pixabay.com/audio/2022/11/22/audio_d6e5132bde.mp3',
+    localFile: require('../assets/sounds/notification-sound-269266.mp3'),
   },
 ];
 
@@ -127,8 +127,10 @@ class SoundManager {
 
       this.volume = options.volume !== undefined ? options.volume : 0.5;
 
+      const source = track.localFile || { uri: track.url! };
+
       const { sound } = await Audio.Sound.createAsync(
-        { uri: track.url! },
+        source,
         {
           shouldPlay: true,
           isLooping: options.loop !== false,
