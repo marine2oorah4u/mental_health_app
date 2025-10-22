@@ -66,6 +66,7 @@ export default function BackgroundSettingsScreen() {
   const { theme } = useTheme();
   const { user } = useAuth();
   const [selectedPattern, setSelectedPattern] = useState('botanical');
+  const [currentPattern, setCurrentPattern] = useState('botanical');
   const [saving, setSaving] = useState(false);
 
   const isDark = theme.text === '#FFFFFF';
@@ -85,13 +86,13 @@ export default function BackgroundSettingsScreen() {
 
     if (data?.background_pattern) {
       setSelectedPattern(data.background_pattern);
+      setCurrentPattern(data.background_pattern);
     }
   };
 
-  const selectPattern = async (patternId: string) => {
+  const applyPattern = async () => {
     if (!user) return;
 
-    setSelectedPattern(patternId);
     setSaving(true);
 
     const { data: existing } = await supabase
@@ -103,14 +104,15 @@ export default function BackgroundSettingsScreen() {
     if (existing) {
       await supabase
         .from('user_preferences')
-        .update({ background_pattern: patternId })
+        .update({ background_pattern: selectedPattern })
         .eq('user_id', user.id);
     } else {
       await supabase
         .from('user_preferences')
-        .insert({ user_id: user.id, background_pattern: patternId });
+        .insert({ user_id: user.id, background_pattern: selectedPattern });
     }
 
+    setCurrentPattern(selectedPattern);
     setSaving(false);
   };
 
@@ -144,7 +146,7 @@ export default function BackgroundSettingsScreen() {
                     borderWidth: isSelected ? 3 : 0,
                   },
                 ]}
-                onPress={() => selectPattern(pattern.id)}
+                onPress={() => setSelectedPattern(pattern.id)}
               >
                 <View style={styles.previewContainer}>
                   <View style={[styles.preview, { backgroundColor: theme.background }]}>
@@ -171,6 +173,18 @@ export default function BackgroundSettingsScreen() {
             );
           })}
         </View>
+
+        {selectedPattern !== currentPattern && (
+          <TouchableOpacity
+            style={[styles.applyButton, { backgroundColor: theme.primary }]}
+            onPress={applyPattern}
+            disabled={saving}
+          >
+            <Text style={styles.applyButtonText}>
+              {saving ? 'Applying...' : 'Apply Pattern'}
+            </Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
@@ -248,5 +262,22 @@ const styles = StyleSheet.create({
   patternDescription: {
     fontSize: 13,
     lineHeight: 18,
+  },
+  applyButton: {
+    borderRadius: 16,
+    padding: 18,
+    marginTop: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  applyButtonText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600',
   },
 });
