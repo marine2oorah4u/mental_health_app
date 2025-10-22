@@ -10,6 +10,7 @@ import { useRouter } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { supabase } from '@/lib/supabase';
 import {
   Heart,
@@ -127,6 +128,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const { theme } = useTheme();
   const { user } = useAuth();
+  const isFocused = useIsFocused();
   const [userName, setUserName] = useState('');
   const [currentStreak, setCurrentStreak] = useState(0);
   const [greeting, setGreeting] = useState('');
@@ -141,7 +143,7 @@ export default function HomeScreen() {
     if (user) {
       loadUserData();
     }
-  }, [user]);
+  }, [user, isFocused]);
 
   const loadUserData = async () => {
     if (!user) return;
