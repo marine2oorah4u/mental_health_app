@@ -72,7 +72,7 @@ export default function HomeScreen() {
       backgroundColor: theme.background,
     },
     headerGradient: {
-      paddingTop: Platform.OS === 'web' ? 60 : 20,
+      paddingTop: 20,
       paddingHorizontal: 20,
       paddingBottom: 80,
     },
